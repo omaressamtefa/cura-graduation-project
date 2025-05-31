@@ -1,12 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import {
+  Router,
+  Navigation,
+  RouterModule,
+  NavigationEnd,
+} from '@angular/router';
 import { RouterOutlet } from '@angular/router';
 import { FlowbiteService } from './core/services/flowbite/flowbite.service';
 import { NavbarComponent } from './layouts/navbar/navbar.component';
 import { AuthService } from './core/services/auth/auth.service';
 import { CommonModule } from '@angular/common';
 import { filter } from 'rxjs/operators';
-import { LocationStrategy } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
+import { PLATFORM_ID, Inject } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +28,7 @@ export class AppComponent implements OnInit {
     private flowbiteService: FlowbiteService,
     private router: Router,
     private authService: AuthService,
-    private locationStrategy: LocationStrategy
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.isLoggedIn = this.authService.isLoggedIn();
 
@@ -32,24 +38,8 @@ export class AppComponent implements OnInit {
         this.currentRoute = event.urlAfterRedirects;
         this.isLoggedIn = this.authService.isLoggedIn();
 
-        if (this.isLoggedIn && this.currentRoute === '/login') {
-          const role = this.authService.getRole();
-          const userId = this.authService.getUserId();
-          if (role && userId) {
-            if (role === 'admin') {
-              this.router.navigate(['/home/admin']);
-            } else if (role === 'doctor') {
-              this.router.navigate([`/home/doctor/${userId}`]);
-            } else if (role === 'patient') {
-              this.router.navigate([`/home/patient/${userId}`]);
-            } else {
-              console.warn('AppComponent - Unknown role:', role);
-              this.router.navigate(['/home']);
-            }
-          } else {
-            console.error('AppComponent - Role or UserId not set');
-            this.router.navigate(['/home']);
-          }
+        if (this.isLoggedIn && ['/', '/login'].includes(this.currentRoute)) {
+          this.redirectToDashboard();
         }
       });
   }
@@ -57,27 +47,40 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.flowbiteService.loadFlowbite((flowbite) => {});
 
-    // Prevent back button for authenticated users
-    if (this.isLoggedIn) {
-      history.pushState(null, '', window.location.href);
+    if (isPlatformBrowser(this.platformId)) {
+      this.currentRoute = this.router.url;
+      this.isLoggedIn = this.authService.isLoggedIn();
+
+      if (this.isLoggedIn && ['/', '/login'].includes(this.currentRoute)) {
+        this.redirectToDashboard();
+      }
+
       window.onpopstate = () => {
         if (this.authService.isLoggedIn()) {
           history.pushState(null, '', window.location.href);
-          const role = this.authService.getRole();
-          const userId = this.authService.getUserId();
-          if (role && userId) {
-            if (role === 'admin') {
-              this.router.navigate(['/home/admin']);
-            } else if (role === 'doctor') {
-              this.router.navigate([`/home/doctor/${userId}`]);
-            } else if (role === 'patient') {
-              this.router.navigate([`/home/patient/${userId}`]);
-            } else {
-              this.router.navigate(['/home']);
-            }
-          }
+          this.redirectToDashboard();
         }
       };
+    }
+  }
+
+  private redirectToDashboard(): void {
+    const role = this.authService.getRole();
+    const userId = this.authService.getUserId();
+    if (role && userId) {
+      if (role === 'admin') {
+        this.router.navigate(['/home/admin']);
+      } else if (role === 'doctor') {
+        this.router.navigate([`/home/doctor/${userId}`]);
+      } else if (role === 'patient') {
+        this.router.navigate([`/home/patient/${userId}`]);
+      } else {
+        console.warn('AppComponent - Unknown role:', role);
+        this.router.navigate(['/home']);
+      }
+    } else {
+      console.error('AppComponent - Role or UserId not set');
+      this.authService.logout();
     }
   }
 
