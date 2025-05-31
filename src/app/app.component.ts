@@ -1,10 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  Router,
-  Navigation,
-  RouterModule,
-  NavigationEnd,
-} from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { RouterOutlet } from '@angular/router';
 import { FlowbiteService } from './core/services/flowbite/flowbite.service';
 import { NavbarComponent } from './layouts/navbar/navbar.component';
@@ -38,6 +33,7 @@ export class AppComponent implements OnInit {
         this.currentRoute = event.urlAfterRedirects;
         this.isLoggedIn = this.authService.isLoggedIn();
 
+        // Redirect authenticated users from / or /login
         if (this.isLoggedIn && ['/', '/login'].includes(this.currentRoute)) {
           this.redirectToDashboard();
         }
@@ -47,6 +43,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.flowbiteService.loadFlowbite((flowbite) => {});
 
+    // Check authentication and route on app load
     if (isPlatformBrowser(this.platformId)) {
       this.currentRoute = this.router.url;
       this.isLoggedIn = this.authService.isLoggedIn();
@@ -55,12 +52,12 @@ export class AppComponent implements OnInit {
         this.redirectToDashboard();
       }
 
-      window.onpopstate = () => {
+      // Log out on page close
+      window.addEventListener('beforeunload', () => {
         if (this.authService.isLoggedIn()) {
-          history.pushState(null, '', window.location.href);
-          this.redirectToDashboard();
+          this.authService.logout();
         }
-      };
+      });
     }
   }
 
