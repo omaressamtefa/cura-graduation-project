@@ -1,0 +1,314 @@
+<div class="update-patient-container">
+  <div class="form-card">
+    <div class="form-header">
+      <h2 class="form-title">Update Patient</h2>
+      <p class="form-subtitle">
+        Update the details for
+        <span class="form-subtitle-name"
+          >{{ patientFirstName }} {{ patientLastName }}</span
+        >
+        below.
+      </p>
+    </div>
+
+    <div class="error-message" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+
+    <form
+      [formGroup]="updatePatientForm"
+      (ngSubmit)="onSubmit()"
+      class="update-form"
+    >
+      <div class="form-group">
+        <label for="firstName" class="form-label">First Name</label>
+        <input
+          type="text"
+          id="firstName"
+          formControlName="firstName"
+          placeholder="Enter first name"
+          [class.invalid]="
+            updatePatientForm.get('firstName')?.invalid &&
+            updatePatientForm.get('firstName')?.touched
+          "
+        />
+        <span
+          class="error-text"
+          *ngIf="updatePatientForm.get('firstName')?.errors?.['required']"
+        >
+          First Name is required.
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="lastName" class="form-label">Last Name</label>
+        <input
+          type="text"
+          id="lastName"
+          formControlName="lastName"
+          placeholder="Enter last name"
+          [class.invalid]="
+            updatePatientForm.get('lastName')?.invalid &&
+            updatePatientForm.get('lastName')?.touched
+          "
+        />
+        <span
+          class="error-text"
+          *ngIf="updatePatientForm.get('lastName')?.errors?.['required']"
+        >
+          Last Name is required.
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="birthDate" class="form-label">Birth Date</label>
+        <input
+          type="date"
+          id="birthDate"
+          formControlName="birthDate"
+          [class.invalid]="
+            updatePatientForm.get('birthDate')?.invalid &&
+            updatePatientForm.get('birthDate')?.touched
+          "
+        />
+        <span
+          class="error-text"
+          *ngIf="updatePatientForm.get('birthDate')?.errors?.['required']"
+        >
+          Birth Date is required.
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="age" class="form-label">Age</label>
+        <input
+          type="number"
+          id="age"
+          formControlName="age"
+          placeholder="Enter age"
+          [class.invalid]="
+            updatePatientForm.get('age')?.invalid &&
+            updatePatientForm.get('age')?.touched
+          "
+        />
+        <span
+          class="error-text"
+          *ngIf="updatePatientForm.get('age')?.errors?.['required']"
+        >
+          Age is required.
+        </span>
+        <span
+          class="error-text"
+          *ngIf="updatePatientForm.get('age')?.errors?.['min']"
+        >
+          Age must be a non-negative number.
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="bloodType" class="form-label">Blood Type</label>
+        <select
+          id="bloodType"
+          formControlName="bloodType"
+          [class.invalid]="
+            updatePatientForm.get('bloodType')?.invalid &&
+            updatePatientForm.get('bloodType')?.touched
+          "
+        >
+          <option value="" disabled>Select Blood Type</option>
+          <option *ngFor="let type of bloodTypes" [value]="type">
+            {{ type }}
+          </option>
+        </select>
+        <span
+          class="error-text"
+          *ngIf="updatePatientForm.get('bloodType')?.errors?.['required']"
+        >
+          Blood Type is required.
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="email" class="form-label">Email</label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          placeholder="Enter email"
+          [class.invalid]="
+            updatePatientForm.get('email')?.invalid &&
+            updatePatientForm.get('email')?.touched
+          "
+        />
+        <span
+          class="error-text"
+          *ngIf="updatePatientForm.get('email')?.errors?.['required']"
+        >
+          Email is required.
+        </span>
+        <span
+          class="error-text"
+          *ngIf="updatePatientForm.get('email')?.errors?.['email']"
+        >
+          Please enter a valid email address.
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="password" class="form-label">Password</label>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          placeholder="Enter password (optional)"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="doctorId" class="form-label">Doctor</label>
+        <select
+          id="doctorId"
+          formControlName="doctorId"
+          [class.invalid]="
+            updatePatientForm.get('doctorId')?.invalid &&
+            updatePatientForm.get('doctorId')?.touched
+          "
+        >
+          <option value="" disabled>Select a Doctor</option>
+          <option *ngFor="let doctor of doctors" [value]="doctor.id">
+            {{ doctor.firstName }} {{ doctor.lastName }}
+          </option>
+        </select>
+        <span
+          class="error-text"
+          *ngIf="updatePatientForm.get('doctorId')?.errors?.['required']"
+        >
+          Doctor selection is required.
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="diagnosis" class="form-label">Diagnosis</label>
+        <textarea
+          id="diagnosis"
+          formControlName="diagnosis"
+          rows="3"
+          placeholder="Enter diagnosis"
+          [class.invalid]="
+            updatePatientForm.get('diagnosis')?.invalid &&
+            updatePatientForm.get('diagnosis')?.touched
+          "
+        ></textarea>
+        <span
+          class="error-text"
+          *ngIf="updatePatientForm.get('diagnosis')?.errors?.['required']"
+        >
+          Diagnosis is required.
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="treatment" class="form-label">Treatment</label>
+        <textarea
+          id="treatment"
+          formControlName="treatment"
+          rows="3"
+          placeholder="Enter treatment"
+          [class.invalid]="
+            updatePatientForm.get('treatment')?.invalid &&
+            updatePatientForm.get('treatment')?.touched
+          "
+        ></textarea>
+        <span
+          class="error-text"
+          *ngIf="updatePatientForm.get('treatment')?.errors?.['required']"
+        >
+          Treatment is required.
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="notes" class="form-label">Notes</label>
+        <textarea
+          id="notes"
+          formControlName="notes"
+          rows="3"
+          placeholder="Enter notes"
+          [class.invalid]="
+            updatePatientForm.get('notes')?.invalid &&
+            updatePatientForm.get('notes')?.touched
+          "
+        ></textarea>
+        <span
+          class="error-text"
+          *ngIf="updatePatientForm.get('notes')?.errors?.['required']"
+        >
+          Notes are required.
+        </span>
+      </div>
+
+      <div class="form-group full-width">
+        <label for="image" class="form-label">Profile Image</label>
+        <input
+          type="file"
+          id="image"
+          (change)="onFileChange($event, 'image')"
+          accept="image/jpeg,image/png,image/gif"
+        />
+        <span
+          class="error-text"
+          *ngIf="updatePatientForm.errors?.['invalidImage']"
+        >
+          Profile image must be a JPEG, PNG, or GIF and less than 5MB.
+        </span>
+      </div>
+
+      <div class="form-group full-width">
+        <label for="xRayImage" class="form-label">X-Ray Image</label>
+        <input
+          type="file"
+          id="xRayImage"
+          (change)="onFileChange($event, 'xRayImage')"
+          accept="image/jpeg,image/png,image/gif"
+        />
+        <span
+          class="error-text"
+          *ngIf="updatePatientForm.errors?.['invalidXRayImage']"
+        >
+          X-Ray image must be a JPEG, PNG, or GIF and less than 5MB.
+        </span>
+      </div>
+
+      <div class="form-group full-width">
+        <label for="labResultsImage" class="form-label"
+          >Lab Results Image</label
+        >
+        <input
+          type="file"
+          id="labResultsImage"
+          (change)="onFileChange($event, 'labResultsImage')"
+          accept="image/jpeg,image/png,image/gif"
+        />
+        <span
+          class="error-text"
+          *ngIf="updatePatientForm.errors?.['invalidLabResultsImage']"
+        >
+          Lab Results image must be a JPEG, PNG, or GIF and less than 5MB.
+        </span>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="cancel-button" (click)="goBack()">
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="submit-button"
+          [disabled]="updatePatientForm.invalid"
+        >
+          Update Patient
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

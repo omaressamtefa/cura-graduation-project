@@ -1,0 +1,280 @@
+$primary-color: #6c5379;
+$secondary-color: #6c5379;
+$error-color: #ef4444;
+$light-bg: #f8ede3;
+$card-bg: #f8ede3;
+$background-color: #f3f4f6;
+$border-color: #e5e7eb;
+
+$breakpoints: (
+  md: 767px,
+  sm: 480px,
+);
+
+// Mixins
+@mixin respond-to($breakpoint) {
+  @media (max-width: map-get($breakpoints, $breakpoint)) {
+    @content;
+  }
+}
+
+// Base Styles
+.patient-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 3rem 1rem;
+  width: 100%;
+
+  position: relative;
+  overflow: hidden;
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.1) 1%,
+      transparent 1%
+    );
+    background-size: 20px 20px;
+    opacity: 0.3;
+  }
+}
+
+/* Form Card Styling */
+.form-card {
+  width: 100%;
+  max-width: 1400px;
+  background: linear-gradient(145deg, $card-bg, lighten($card-bg, 5%));
+  border-radius: 2rem;
+  padding: 3rem;
+  border: 1px solid $border-color;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  animation: fadeIn 0.8s ease-out;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 2rem;
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.2);
+    pointer-events: none;
+  }
+}
+
+/* Gradient Text for Title */
+.gradient-text {
+  background: linear-gradient(
+    to right,
+    $primary-color,
+    darken($primary-color, 10%)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: fadeInDown 0.6s ease-out;
+}
+
+/* Patient Card */
+.patient-card {
+  width: 100%;
+  margin-bottom: 2.5rem;
+  animation: fadeIn 0.8s ease-out;
+
+  .flex {
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    border: 2px solid $primary-color;
+    box-shadow: 0 6px 15px rgba(108, 83, 121, 0.2);
+    background: linear-gradient(
+      135deg,
+      lighten($primary-color, 30%),
+      lighten($primary-color, 20%)
+    );
+    transition: transform 0.4s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+
+    img {
+      border: 4px solid $primary-color;
+      ring: 4px rgba(108, 83, 121, 0.2);
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    .info-section {
+      p {
+        animation: fadeInUp 0.6s ease-out;
+        &:nth-child(2) {
+          animation-delay: 0.2s;
+        }
+        &.age-field {
+          animation-delay: 0.4s;
+        }
+        &.blood-type-field {
+          animation-delay: 0.6s;
+        }
+      }
+    }
+  }
+}
+
+/* Error Section */
+.error-section {
+  margin-bottom: 2rem;
+  width: 100%;
+  text-align: center;
+  padding: 1rem;
+  background: linear-gradient(145deg, #fef2f2, lighten(#fef2f2, 3%));
+  border-radius: 0.75rem;
+  border: 1px solid $error-color;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  animation: shake 0.3s ease-in-out;
+
+  &[hidden="false"] {
+    opacity: 1;
+  }
+}
+
+.loading-section {
+  margin-bottom: 2rem;
+  width: 100%;
+  text-align: center;
+  padding: 1rem;
+  background: linear-gradient(145deg, #dbeafe, lighten(#dbeafe, 3%));
+  border-radius: 0.75rem;
+  border: 1px solid #3b82f6;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  animation: fadeIn 0.8s ease-out;
+
+  &[hidden="false"] {
+    opacity: 1;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+/* Responsive Design */
+@include respond-to(md) {
+  .update-doctor-container {
+    padding: 2rem 1rem;
+  }
+
+  .form-card {
+    max-width: 100%;
+    padding: 2rem;
+    border-radius: 1.5rem;
+  }
+
+  .patient-card .flex {
+    padding: 1rem;
+    flex-direction: column;
+    text-align: center;
+
+    img {
+      margin-bottom: 1rem;
+    }
+
+    h3 {
+      font-size: 2rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+  }
+}
+
+@include respond-to(sm) {
+  .update-doctor-container {
+    padding: 1rem;
+    min-height: calc(100vh - 2rem);
+  }
+
+  .form-card {
+    padding: 1.5rem;
+    border-radius: 1rem;
+  }
+
+  .patient-card .flex {
+    padding: 0.75rem;
+
+    img {
+      width: 48px;
+      height: 48px;
+    }
+
+    h3 {
+      font-size: 1.5rem;
+    }
+
+    p {
+      font-size: 0.9rem;
+    }
+  }
+}

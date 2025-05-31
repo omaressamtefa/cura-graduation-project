@@ -1,0 +1,123 @@
+<section class="details-container">
+  <div class="details-card">
+    <!-- Loading Spinner -->
+    @if (isLoading) {
+    <div class="loading-spinner">
+      <svg class="spinner-icon" viewBox="0 0 24 24">
+        <circle
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="#14b8a6"
+          stroke-width="2"
+          fill="none"
+        />
+      </svg>
+      Loading Doctor Data...
+    </div>
+    }
+
+    <!-- Error Message -->
+    @if (errorMessage && !isLoading) {
+    <div class="error-message">
+      <i class="fas fa-exclamation-circle"></i>
+      {{ errorMessage }}
+    </div>
+    }
+
+    <!-- Doctor Details -->
+    @if (!isLoading && !errorMessage && doctor) {
+    <div class="header">
+      <h2 class="header-title">Doctor Profile</h2>
+      <p class="header-subtitle">
+        Comprehensive details for Dr. {{ doctor.firstName || "Unknown" }}
+        {{ doctor.lastName || "Unknown" }}
+      </p>
+    </div>
+
+    <div class="profile-section">
+      <div class="avatar">
+        @if (safeImageUrl && !imageLoadFailed) {
+        <img
+          [src]="safeImageUrl"
+          alt="Doctor Profile Image"
+          class="profile-image"
+          (error)="handleImageError()"
+        />
+        } @else {
+        <i class="fas fa-user-md"></i>
+        }
+      </div>
+      <h3 class="profile-name">
+        Dr. {{ doctor.firstName || "Unknown" }}
+        {{ doctor.lastName || "Unknown" }}
+      </h3>
+      <p class="profile-role">{{ doctor.specialty || "N/A" }} Specialist</p>
+    </div>
+
+    <div class="details-section">
+      <div class="details-grid">
+        <div class="detail-item">
+          <span class="detail-label">Doctor ID</span>
+          <span class="detail-value centered-text">{{
+            doctor.id || "N/A"
+          }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Name</span>
+          <span class="detail-value centered-text">
+            {{ doctor.firstName || "N/A" }}
+            {{ doctor.lastName || "N/A" }}
+          </span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Email</span>
+          <span class="detail-value centered-text">{{
+            doctor.email || "N/A"
+          }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Specialty</span>
+          <span class="detail-value centered-text">{{
+            doctor.specialty || "N/A"
+          }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Gender</span>
+          <span class="detail-value centered-text">{{
+            doctor.gender || "N/A"
+          }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Birth Date</span>
+          <span class="detail-value centered-text">{{
+            doctor.birthDate || "N/A"
+          }}</span>
+        </div>
+
+        <div class="detail-item full-width">
+          <span class="detail-label">Assigned Patients</span>
+          <span class="detail-value centered-text">
+            {{
+              doctor.departmentDetails && doctor.departmentDetails.length > 0
+                ? doctor.departmentDetails.length + " patients"
+                : "No patients assigned"
+            }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      @if (role === 'admin' || role === 'doctor') {
+      <button class="edit-button" (click)="editDoctor(doctor.id)">
+        <i class="fas fa-edit"></i> Edit
+      </button>
+      <button class="delete-button" (click)="deleteDoctor(doctor.id)">
+        <i class="fas fa-trash"></i> Delete
+      </button>
+      }
+    </div>
+    }
+  </div>
+</section>

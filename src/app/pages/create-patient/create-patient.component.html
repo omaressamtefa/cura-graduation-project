@@ -1,0 +1,362 @@
+<div class="patient-container">
+  <div class="form-card">
+    <div class="form-header">
+      <h2 class="form-title">Create New Patient</h2>
+      <p class="form-subtitle">
+        Fill in the details to register a new patient.
+      </p>
+    </div>
+
+    <div class="error-message" [hidden]="!errorMessage">
+      <span id="error-message-text">{{ errorMessage }}</span>
+    </div>
+
+    <div class="text-teal-500" [hidden]="!successMessage">
+      <span id="success-message-text">{{ successMessage }}</span>
+    </div>
+
+    <form [formGroup]="patientForm" (ngSubmit)="onSubmit()" class="update-form">
+      <!-- First Name -->
+      <div class="form-group">
+        <label for="firstName">First Name</label>
+        <input
+          id="firstName"
+          type="text"
+          placeholder="Enter first name"
+          formControlName="firstName"
+          [class.invalid]="
+            patientForm.get('firstName')?.invalid &&
+            patientForm.get('firstName')?.touched
+          "
+        />
+        <span
+          class="error-text"
+          [hidden]="
+            !(
+              patientForm.get('firstName')?.invalid &&
+              patientForm.get('firstName')?.touched
+            )
+          "
+        >
+          First name is required and must be at least 2 characters.
+        </span>
+      </div>
+
+      <!-- Last Name -->
+      <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input
+          id="lastName"
+          type="text"
+          placeholder="Enter last name"
+          formControlName="lastName"
+          [class.invalid]="
+            patientForm.get('lastName')?.invalid &&
+            patientForm.get('lastName')?.touched
+          "
+        />
+        <span
+          class="error-text"
+          [hidden]="
+            !(
+              patientForm.get('lastName')?.invalid &&
+              patientForm.get('lastName')?.touched
+            )
+          "
+        >
+          Last name is required and must be at least 2 characters.
+        </span>
+      </div>
+
+      <!-- Email -->
+      <div class="form-group full-width">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          placeholder="Enter email"
+          formControlName="email"
+          [class.invalid]="
+            patientForm.get('email')?.invalid &&
+            patientForm.get('email')?.touched
+          "
+        />
+        <span
+          class="error-text"
+          [hidden]="
+            !(
+              patientForm.get('email')?.invalid &&
+              patientForm.get('email')?.touched
+            )
+          "
+        >
+          <span [hidden]="!patientForm.get('email')?.errors?.['required']">
+            Email is required.
+          </span>
+          <span [hidden]="!patientForm.get('email')?.errors?.['email']">
+            Please enter a valid email address.
+          </span>
+        </span>
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          placeholder="Enter password"
+          formControlName="password"
+          [class.invalid]="
+            patientForm.get('password')?.invalid &&
+            patientForm.get('password')?.touched
+          "
+        />
+        <span
+          class="error-text"
+          [hidden]="
+            !(
+              patientForm.get('password')?.invalid &&
+              patientForm.get('password')?.touched
+            )
+          "
+        >
+          Password is required and must be at least 6 characters.
+        </span>
+      </div>
+
+      <!-- Birth Date -->
+      <div class="form-group">
+        <label for="birthDate">Date of Birth</label>
+        <input
+          id="birthDate"
+          type="date"
+          formControlName="birthDate"
+          [max]="today"
+          [class.invalid]="
+            patientForm.get('birthDate')?.invalid &&
+            patientForm.get('birthDate')?.touched
+          "
+        />
+        <span
+          class="error-text"
+          [hidden]="
+            !(
+              patientForm.get('birthDate')?.invalid &&
+              patientForm.get('birthDate')?.touched
+            )
+          "
+        >
+          Date of Birth is required and cannot be in the future.
+        </span>
+      </div>
+
+      <!-- Gender -->
+      <div class="form-group">
+        <label for="gender">Gender</label>
+        <select
+          id="gender"
+          formControlName="gender"
+          [class.invalid]="
+            patientForm.get('gender')?.invalid &&
+            patientForm.get('gender')?.touched
+          "
+        >
+          <option value="" disabled>Select gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+        <span
+          class="error-text"
+          [hidden]="
+            !(
+              patientForm.get('gender')?.invalid &&
+              patientForm.get('gender')?.touched
+            )
+          "
+        >
+          Gender is required.
+        </span>
+      </div>
+
+      <!-- Blood Type -->
+      <div class="form-group">
+        <label for="bloodType">Blood Type</label>
+        <select
+          id="bloodType"
+          formControlName="bloodType"
+          [class.invalid]="
+            patientForm.get('bloodType')?.invalid &&
+            patientForm.get('bloodType')?.touched
+          "
+        >
+          <option value="" disabled>Select blood type</option>
+          <option value="A+">A+</option>
+          <option value="A-">A-</option>
+          <option value="B+">B+</option>
+          <option value="B-">B-</option>
+          <option value="AB+">AB+</option>
+          <option value="AB-">AB-</option>
+          <option value="O+">O+</option>
+          <option value="O-">O-</option>
+        </select>
+        <span
+          class="error-text"
+          [hidden]="
+            !(
+              patientForm.get('bloodType')?.invalid &&
+              patientForm.get('bloodType')?.touched
+            )
+          "
+        >
+          Blood type is required.
+        </span>
+      </div>
+
+      <!-- Doctor ID -->
+      <div class="form-group">
+        <label for="doctorId">Assigned Doctor</label>
+        <select
+          id="doctorId"
+          formControlName="doctorId"
+          [disabled]="doctors.length === 0"
+          [class.invalid]="
+            patientForm.get('doctorId')?.invalid &&
+            patientForm.get('doctorId')?.touched
+          "
+        >
+          <option value="" disabled>Select a doctor</option>
+          <option *ngFor="let doctor of doctors" [value]="doctor.id">
+            {{ doctor.firstName }} {{ doctor.lastName }}
+          </option>
+        </select>
+        <span
+          class="error-text"
+          [hidden]="
+            !(
+              patientForm.get('doctorId')?.invalid &&
+              patientForm.get('doctorId')?.touched
+            )
+          "
+        >
+          Assigned doctor is required.
+        </span>
+        <span class="error-text" *ngIf="doctors.length === 0 && !errorMessage">
+          No doctors available. Please try again later.
+        </span>
+      </div>
+      <!-- Diagnosis -->
+      <div class="form-group full-width">
+        <label for="diagnosis">Diagnosis</label>
+        <input
+          id="diagnosis"
+          type="text"
+          placeholder="Enter diagnosis"
+          formControlName="diagnosis"
+          [class.invalid]="
+            patientForm.get('diagnosis')?.invalid &&
+            patientForm.get('diagnosis')?.touched
+          "
+        />
+        <span
+          class="error-text"
+          [hidden]="
+            !(
+              patientForm.get('diagnosis')?.invalid &&
+              patientForm.get('diagnosis')?.touched
+            )
+          "
+        >
+          Diagnosis is required.
+        </span>
+      </div>
+
+      <!-- Treatment -->
+      <div class="form-group full-width">
+        <label for="treatment">Treatment Plan</label>
+        <textarea
+          id="treatment"
+          placeholder="Enter treatment plan"
+          rows="4"
+          formControlName="treatment"
+          [class.invalid]="
+            patientForm.get('treatment')?.invalid &&
+            patientForm.get('treatment')?.touched
+          "
+        ></textarea>
+        <span
+          class="error-text"
+          [hidden]="
+            !(
+              patientForm.get('treatment')?.invalid &&
+              patientForm.get('treatment')?.touched
+            )
+          "
+        >
+          Treatment plan is required.
+        </span>
+      </div>
+
+      <!-- Image Upload -->
+      <div class="form-group full-width">
+        <label for="image">Profile Image (Optional)</label>
+        <input
+          #imageInput
+          id="image"
+          type="file"
+          accept=".jpg,.jpeg,.png,.gif"
+          (change)="onFileChange($event)"
+        />
+        <span class="text-gray-500 text-sm mt-1">
+          JPG, JPEG, PNG, or GIF (max 5MB)
+        </span>
+      </div>
+
+      <!-- X-Ray Image Upload -->
+      <div class="form-group full-width">
+        <label for="xRayImage">X-Ray Image (Optional)</label>
+        <input
+          #xRayImageInput
+          id="xRayImage"
+          type="file"
+          accept=".jpg,.jpeg,.png,.gif"
+          (change)="onXRayFileChange($event)"
+        />
+        <span class="text-gray-500 text-sm mt-1">
+          JPG, JPEG, PNG, or GIF (max 5MB)
+        </span>
+      </div>
+
+      <!-- Lab Results Image Upload -->
+      <div class="form-group full-width">
+        <label for="labResultsImage">Lab Results Image (Optional)</label>
+        <input
+          #labResultsImageInput
+          id="labResultsImage"
+          type="file"
+          accept=".jpg,.jpeg,.png,.gif"
+          (change)="onLabResultsFileChange($event)"
+        />
+        <span class="text-gray-500 text-sm mt-1">
+          JPG, JPEG, PNG, or GIF (max 5MB)
+        </span>
+      </div>
+
+      <!-- Form Actions -->
+      <div class="form-actions">
+        <button type="button" class="cancel-button" (click)="cancel()">
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="submit-button"
+          [disabled]="patientForm.invalid || isSubmitting"
+        >
+          <span [hidden]="isSubmitting">Create Patient</span>
+          <span [hidden]="!isSubmitting">Creating...</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

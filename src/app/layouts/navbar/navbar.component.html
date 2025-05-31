@@ -1,0 +1,65 @@
+<div class="ml-80">
+  <aside class="w-80 text-gray-800 flex flex-col p-8 sidebar">
+    <div
+      class="flex items-center gap-3 mb-12 cursor-pointer"
+      [routerLink]="dashboardLink()"
+    >
+      <i class="fas fa-hospital text-4xl text-gray-800"></i>
+      <h1 class="text-4xl font-bold tracking-tight sidebar-title">Cura</h1>
+    </div>
+
+    <nav class="flex-1">
+      <ul>
+        <li class="mb-6">
+          <a
+            [routerLink]="dashboardLink()"
+            routerLinkActive="active"
+            class="flex items-center gap-4 text-xl font-medium text-gray-800 transition-colors duration-300 sidebar-link"
+          >
+            <i class="fas fa-tachometer-alt text-xl"></i> Dashboard
+          </a>
+        </li>
+
+        <!-- Profile Link -->
+        <li class="mb-6">
+          <a
+            [routerLink]="profileLink()"
+            routerLinkActive="active"
+            class="flex items-center gap-4 text-xl font-medium text-gray-800 transition-colors duration-300 sidebar-link"
+          >
+            <i class="fas fa-user text-xl"></i> Profile
+          </a>
+        </li>
+
+        <!-- Admin-Specific Links -->
+        <div [hidden]="(role() ?? '') !== 'admin'">
+          <li class="mb-6">
+            <a
+              routerLink="/doctors"
+              routerLinkActive="active"
+              class="flex items-center gap-4 text-xl font-medium text-gray-800 transition-colors duration-300 sidebar-link"
+            >
+              <i class="fas fa-user-md text-xl"></i> Doctors
+            </a>
+          </li>
+          <li class="mb-6">
+            <a
+              routerLink="/patients"
+              routerLinkActive="active"
+              class="flex items-center gap-4 text-xl font-medium text-gray-800 transition-colors duration-300 sidebar-link"
+            >
+              <i class="fas fa-users text-xl"></i> Patients
+            </a>
+          </li>
+        </div>
+      </ul>
+    </nav>
+
+    <button
+      (click)="logout()"
+      class="flex items-center gap-4 text-xl font-medium text-gray-800 transition-colors duration-300 logout-button"
+    >
+      <i class="fas fa-sign-out-alt text-xl"></i> Logout
+    </button>
+  </aside>
+</div>

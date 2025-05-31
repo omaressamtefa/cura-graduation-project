@@ -1,0 +1,567 @@
+$primary-color: #6c5379;
+$secondary-color: #6c5379;
+$error-color: #ef4444;
+$light-bg: #f8ede3;
+$card-bg: #f8ede3;
+$background-color: #f3f4f6;
+$border-color: #e5e7eb;
+
+/* Container Styling */
+.details-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 3rem 1rem;
+  background: linear-gradient(
+    135deg,
+    $background-color 0%,
+    darken($background-color, 5%) 100%
+  );
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+
+  /* Subtle background pattern */
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.1) 1%,
+      transparent 1%
+    );
+    background-size: 20px 20px;
+    opacity: 0.3;
+  }
+}
+
+/* Card Styling */
+.details-card {
+  width: 100%;
+  max-width: 1200px;
+  background: linear-gradient(145deg, $card-bg, lighten($card-bg, 5%));
+  border-radius: 2rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
+  padding: 2.5rem;
+  border: 1px solid $border-color;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Subtle inner glow */
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 2rem;
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.2);
+    pointer-events: none;
+  }
+}
+
+/* Header Styling */
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+.header-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #1f2937;
+  margin-bottom: 0.75rem;
+  font-family: "Inter", sans-serif;
+  letter-spacing: -0.025em;
+  background: linear-gradient(to right, #1f2937, darken($primary-color, 10%));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: fadeInDown 0.6s ease-out;
+}
+
+.header-subtitle {
+  font-size: 1.2rem;
+  color: #6b7280;
+  font-family: "Inter", sans-serif;
+  opacity: 0.9;
+  animation: fadeInUp 0.6s ease-out 0.2s;
+  animation-fill-mode: both;
+}
+
+/* Profile Section */
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 3rem;
+  animation: fadeIn 0.8s ease-out;
+}
+
+.avatar {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e0f2f7, lighten($primary-color, 20%));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15),
+    inset 0 0 10px rgba(255, 255, 255, 0.3);
+  margin-bottom: 1.5rem;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    transform: scale(1.08) rotate(2deg);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Ripple effect */
+  &:before {
+    content: "";
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.2), transparent);
+    transition: transform 0.6s ease;
+    transform: scale(0);
+  }
+
+  &:hover:before {
+    transform: scale(1);
+  }
+}
+
+.profile-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(255, 255, 255, 0.8);
+}
+
+.avatar i {
+  color: $primary-color;
+  font-size: 3rem;
+  transition: color 0.3s ease;
+}
+
+.profile-name {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #1f2937;
+  font-family: "Inter", sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.profile-role {
+  font-size: 1.1rem;
+  color: #6b7280;
+  font-family: "Inter", sans-serif;
+  opacity: 0.85;
+}
+
+/* Details Section */
+.details-section {
+  margin-bottom: 3rem;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  width: 100%;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  background: linear-gradient(145deg, $light-bg, lighten($light-bg, 3%));
+  border-radius: 1.5rem;
+  border: 1px solid $border-color;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  position: relative;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.full-width {
+  grid-column: 1 / -1;
+  padding: 1.5rem;
+}
+
+.detail-label {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: $primary-color;
+  margin-bottom: 0.75rem;
+  font-family: "Inter", sans-serif;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.detail-value {
+  font-size: 1.2rem;
+  color: #1f2937;
+  font-family: "Inter", sans-serif;
+  word-break: break-word;
+  line-height: 1.5;
+}
+
+/* Basic Image Styling for X-Ray and Lab Results */
+.basic-image {
+  width: 450px;
+  height: auto;
+  object-fit: contain;
+  border: 2px solid $border-color;
+  border-radius: 1rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  }
+}
+
+/* Treatment History Section */
+.treatment-history-section {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
+.section-title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #1f2937;
+  margin-bottom: 2rem;
+  font-family: "Inter", sans-serif;
+  background: linear-gradient(to right, #1f2937, darken($primary-color, 10%));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: fadeInLeft 0.6s ease-out;
+}
+
+/* Treatment History Card */
+.treatment-history-card {
+  background: linear-gradient(145deg, $light-bg, lighten($light-bg, 5%));
+  border-radius: 1.5rem;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid $border-color;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  }
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.edit-button,
+.delete-button {
+  padding: 0.9rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 3rem;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: all 0.4s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: "Inter", sans-serif;
+  position: relative;
+  overflow: hidden;
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.3),
+      transparent
+    );
+    transition: left 0.4s ease;
+  }
+
+  &:hover:before {
+    left: 100%;
+  }
+}
+
+.edit-button {
+  background: linear-gradient(
+    135deg,
+    $secondary-color,
+    lighten($secondary-color, 10%)
+  );
+  color: white;
+
+  &:hover {
+    background: linear-gradient(135deg, #16a34a, lighten(#16a34a, 10%));
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(34, 197, 94, 0.3);
+  }
+}
+
+.delete-button {
+  background: linear-gradient(135deg, $error-color, lighten($error-color, 10%));
+  color: white;
+
+  &:hover {
+    background: linear-gradient(135deg, #dc2626, lighten(#dc2626, 10%));
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
+  }
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  color: #1f2937;
+  margin: 3rem 0;
+  font-family: "Inter", sans-serif;
+  animation: fadeIn 0.8s ease-out;
+
+  .spinner-icon {
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin-right: 1rem;
+  }
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Error Message */
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  color: $error-color;
+  background: linear-gradient(145deg, #fef2f2, lighten(#fef2f2, 3%));
+  border-radius: 1.5rem;
+  font-size: 1.2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  border: 1px solid #fee2e2;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15);
+  font-family: "Inter", sans-serif;
+  animation: shake 0.3s ease-in-out;
+
+  i {
+    font-size: 1.4rem;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 767px) {
+  .details-container {
+    padding: 2rem 1rem;
+  }
+
+  .details-card {
+    padding: 2rem;
+    border-radius: 1.5rem;
+  }
+
+  .header-title {
+    font-size: 1.8rem;
+  }
+
+  .header-subtitle {
+    font-size: 1rem;
+  }
+
+  .avatar {
+    width: 120px;
+    height: 120px;
+  }
+
+  .profile-image {
+    width: 100%;
+    height: 100%;
+  }
+
+  .avatar i {
+    font-size: 2.5rem;
+  }
+
+  .profile-name {
+    font-size: 1.5rem;
+  }
+
+  .profile-role {
+    font-size: 1rem;
+  }
+
+  .details-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .detail-item {
+    padding: 1.5rem;
+  }
+
+  .basic-image {
+    width: 350px;
+  }
+
+  .treatment-history-card {
+    padding: 1.5rem;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .details-card {
+    padding: 1.5rem;
+    border-radius: 1rem;
+  }
+
+  .header-title {
+    font-size: 1.5rem;
+  }
+
+  .details-grid {
+    gap: 1rem;
+  }
+
+  .detail-item {
+    padding: 1rem;
+  }
+
+  .detail-label {
+    font-size: 1rem;
+  }
+
+  .detail-value {
+    font-size: 1.1rem;
+  }
+
+  .basic-image {
+    width: 280px;
+  }
+
+  .treatment-history-card {
+    padding: 1rem;
+  }
+
+  .edit-button,
+  .delete-button {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.95rem;
+  }
+}

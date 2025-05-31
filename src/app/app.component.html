@@ -1,0 +1,11 @@
+<div class="flex min-h-screen bg-[#f8ede3]">
+  <!-- Sidebar (Navbar) - Controlled by CSS class -->
+  <app-navbar
+    [ngClass]="isLoggedIn ? 'sidebar' : 'sidebar hidden'"
+  ></app-navbar>
+
+  <!-- Main Content Wrapper -->
+  <main class="flex-1 overflow-auto">
+    <router-outlet></router-outlet>
+  </main>
+</div>

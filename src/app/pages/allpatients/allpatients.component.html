@@ -1,0 +1,183 @@
+<div class="dashboard-container">
+  <div class="dashboard-card">
+    <!-- Header -->
+    <div class="header">
+      <div>
+        <h2 class="header-title">All Patients</h2>
+        <p class="header-subtitle">List of all patients in the system</p>
+      </div>
+      <button (click)="createPatient()" class="create-button">
+        <i class="fas fa-plus mr-2"></i> Create New Patient
+      </button>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="search-container">
+      <div class="relative">
+        <input
+          type="text"
+          placeholder="Search by name, email, or specialty..."
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="onSearchChange(); currentPage = 1; fetchPatients()"
+          class="search-input"
+        />
+        <i
+          class="fas fa-search absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-400 text-base"
+        ></i>
+      </div>
+    </div>
+
+    <!-- Patients Section -->
+    <div class="patients-section">
+      <!-- Loading Spinner -->
+      @if (isLoadingPatients) {
+      <div class="loading-spinner">
+        <svg class="spinner-icon" viewBox="0 0 24 24">
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="var(--curaTeal)"
+            stroke-width="2"
+            fill="none"
+          />
+        </svg>
+        Loading patients...
+      </div>
+      } @else {
+      <div class="loading-spinner hidden"></div>
+      }
+
+      <!-- Error Message -->
+      @if (hasErrorPatients) {
+      <div class="error-message">
+        <i class="fas fa-exclamation-circle"></i>
+        {{
+          errorMessagePatients || "An error occurred while loading patients."
+        }}
+      </div>
+      } @else {
+      <div class="error-message hidden"></div>
+      }
+
+      <!-- Patients List -->
+      @if (!filteredPatients.length || isLoadingPatients || hasErrorPatients) {
+      <div class="patients-list hidden"></div>
+      } @else {
+      <div class="patients-list">
+        <div class="patients-grid">
+          <!-- Dynamically render each patient card -->
+          @for (patient of filteredPatients; track patient.id) {
+          <div class="patient-card">
+            <div class="patient-image-container">
+              <div class="avatar">
+                @if (safeImageUrlMap[patient.id] &&
+                !imageLoadFailedMap[patient.id]) {
+                <img
+                  [src]="safeImageUrlMap[patient.id]"
+                  [alt]="patient.firstName + ' ' + patient.lastName"
+                  class="patient-image"
+                  (error)="handleImageError(patient.id)"
+                />
+                } @else {
+                <i class="fas fa-user fa-2x"></i>
+                }
+              </div>
+            </div>
+            <div class="patient-info">
+              <h3 class="patient-name">
+                {{ patient.firstName }} {{ patient.lastName }}
+              </h3>
+              <p class="patient-age">Age: {{ patient.age || "N/A" }}</p>
+              <p class="patient-email">Email: {{ patient.email || "N/A" }}</p>
+            </div>
+            <div class="patient-actions">
+              <button
+                (click)="viewPatient(patient.id)"
+                class="view-button"
+                aria-label="View patient details"
+              >
+                View
+              </button>
+              <button
+                (click)="updatePatient(patient.id)"
+                class="update-button"
+                aria-label="Update patient"
+              >
+                Edit
+              </button>
+              <button
+                (click)="deletePatient(patient.id)"
+                class="delete-button"
+                aria-label="Delete patient"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+      }
+
+      <!-- No Data Message -->
+      @if (filteredPatients.length || isLoadingPatients || hasErrorPatients) {
+      <div class="no-data-message hidden"></div>
+      } @else {
+      <div class="no-data-message">No patients found.</div>
+      }
+
+      <!-- Pagination Controls -->
+      @if (isLoadingPatients || hasErrorPatients || !filteredPatients.length) {
+      <div
+        class="pagination-container mt-6 flex justify-between items-center"
+      ></div>
+      } @else {
+      <div class="pagination-container mt-6 flex justify-between items-center">
+        <div class="text-sm text-gray-600">
+          Showing {{ (currentPage - 1) * pageSize + 1 }} to
+          {{
+            currentPage * pageSize > totalItems
+              ? totalItems
+              : currentPage * pageSize
+          }}
+          of {{ totalItems }} patients
+        </div>
+        <div class="flex items-center space-x-2">
+          <button
+            (click)="previousPage()"
+            [disabled]="currentPage === 1"
+            class="pagination-button"
+            aria-label="Previous page"
+          >
+            <i class="fas fa-chevron-left mr-2"></i> Previous
+          </button>
+
+          <!-- Dynamically render pagination buttons -->
+          @if (getPageNumbers().length > 0) { @for (page of getPageNumbers();
+          track page) {
+          <button
+            (click)="goToPage(page)"
+            class="pagination-button pagination-number"
+            [class.active]="currentPage === page"
+            [attr.aria-label]="'Go to page ' + page"
+            [attr.aria-current]="currentPage === page ? 'page' : null"
+          >
+            {{ page }}
+          </button>
+          } }
+
+          <button
+            (click)="nextPage()"
+            [disabled]="currentPage === totalPages"
+            class="pagination-button"
+            aria-label="Next page"
+          >
+            Next <i class="fas fa-chevron-right ml-2"></i>
+          </button>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,95 @@
+:host {
+  display: block;
+}
+
+.font-roboto {
+  font-family: "Roboto", sans-serif;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.logo-icon {
+  position: relative;
+  animation: bounceGlow 1.2s ease-in-out infinite;
+  font-family: "Roboto", sans-serif;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.logo-icon:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 25px rgba(46, 186, 165, 0.5);
+}
+
+@keyframes bounceGlow {
+  0%, 100% {
+    transform: translateY(0);
+    box-shadow: 0 0 12px rgba(46, 186, 165, 0.4);
+  }
+  50% {
+    transform: translateY(-4px);
+    box-shadow: 0 0 18px rgba(46, 186, 165, 0.6);
+  }
+}
+@keyframes pressDown2 {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(3px);
+  }
+}
+@keyframes pressDown3 {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(3px);
+  }
+}
+@keyframes pressDown4 {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(3px);
+  }
+}
+.title {
+  position: relative;
+  display: inline-block;
+  animation: fadeIn 1.5s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+input:focus {
+  outline: none;
+}
+
+button[disabled] {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+button:not([disabled]):hover {
+  transform: scale(1.02);
+}/*# sourceMappingURL=login.component.css.map */

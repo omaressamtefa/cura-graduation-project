@@ -1,0 +1,57 @@
+.sidebar {
+  background-color: #ffffff;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-link {
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+}
+.sidebar-link:hover {
+  background-color: #f1f5f9;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transform: scale(1.1);
+}
+.sidebar-link.active {
+  color: #3b82f6;
+  font-weight: 600;
+  background-color: #e0f2fe;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.logout-button {
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+}
+.logout-button:hover {
+  background-color: #f1f5f9;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transform: scale(1.1);
+}
+
+.dashboard-card {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  border: none;
+}
+
+.search-container {
+  margin-bottom: 3rem; /* Increased spacing between search bar and table */
+}
+
+.search-input {
+  box-shadow: none;
+}
+
+.summary-card {
+  background-color: #ffffff;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+  transition: all 0.3s ease;
+}
+.summary-card:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1); /* Slightly stronger shadow on hover */
+  transform: translateY(-2px); /* Slight lift effect */
+}/*# sourceMappingURL=home.component.css.map */

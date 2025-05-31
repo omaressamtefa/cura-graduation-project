@@ -1,0 +1,584 @@
+$primary-color: #6c5379;
+$secondary-color: #6c5379;
+$error-color: #ef4444;
+$light-bg: #f8ede3;
+$card-bg: #f8ede3;
+$background-color: #f3f4f6;
+$border-color: #e5e7eb;
+
+$breakpoints: (
+  md: 767px,
+  sm: 480px,
+);
+
+// Mixins
+@mixin respond-to($breakpoint) {
+  @media (max-width: map-get($breakpoints, $breakpoint)) {
+    @content;
+  }
+}
+
+/* Base Styles */
+main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-y: auto;
+  width: 100%;
+  padding: 0;
+}
+
+section {
+  font-family: "Roboto", sans-serif;
+}
+
+/* Dashboard Card */
+.dashboard-card {
+  border-radius: 2rem;
+  padding: 2.5rem;
+  min-height: calc(100vh - 4rem);
+  width: 100%;
+  background: linear-gradient(145deg, $card-bg, lighten($card-bg, 5%));
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: hidden;
+  animation: fadeIn 0.8s ease-out;
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.1) 1%,
+      transparent 1%
+    );
+    background-size: 20px 20px;
+    opacity: 0.3;
+  }
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 2rem;
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.2);
+    pointer-events: none;
+  }
+}
+
+/* Dashboard Header */
+.dashboard-header {
+  margin-bottom: 2rem;
+  text-align: center;
+  animation: fadeInDown 0.6s ease-out;
+
+  .dashboard-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    color: #1f2937;
+    background: linear-gradient(to right, #1f2937, darken($primary-color, 10%));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .dashboard-subtitle {
+    font-size: 1.2rem;
+    color: #6b7280;
+    font-weight: 400;
+    opacity: 0.9;
+    animation: fadeInUp 0.6s ease-out 0.2s;
+    animation-fill-mode: both;
+  }
+}
+
+/* Summary Cards */
+.summary-cards {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  width: 100%;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.summary-card {
+  background: linear-gradient(
+    145deg,
+    $primary-color,
+    lighten($primary-color, 10%)
+  );
+  border: none;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  flex: 1;
+  min-width: 200px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .card-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .text-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+  }
+
+  .icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    i {
+      font-size: 1.5rem;
+      color: #ffffff;
+    }
+  }
+
+  .card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #ffffff;
+  }
+
+  .card-value {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #ffffff;
+  }
+
+  &.total-doctors,
+  &.total-patients,
+  &.appointments {
+    background: linear-gradient(
+      145deg,
+      $primary-color,
+      lighten($primary-color, 10%)
+    );
+    &:hover {
+      background: linear-gradient(
+        145deg,
+        lighten($primary-color, 10%),
+        $primary-color
+      );
+    }
+  }
+}
+
+/* Search Bar */
+.search-create-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: nowrap;
+  width: 100%;
+  gap: 1.5rem;
+  animation: fadeIn 0.8s ease-out;
+}
+
+.search-bar {
+  position: relative;
+  flex: 1;
+  max-width: 400px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 1rem 3rem 1rem 1.5rem;
+  border: 2px solid $border-color;
+  border-radius: 2rem;
+  font-size: 1rem;
+  outline: none;
+  background: $light-bg;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+
+  &:focus {
+    border-color: $primary-color;
+    box-shadow: 0 0 0 4px rgba(108, 83, 121, 0.2);
+    transform: scale(1.01);
+  }
+}
+
+.search-icon {
+  position: absolute;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6b7280;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+
+  .search-input:focus + & {
+    color: $primary-color;
+  }
+}
+
+/* Card Styles */
+.bg-\[\#f8ede3\] {
+  background: linear-gradient(145deg, $card-bg, lighten($card-bg, 3%));
+  transition: all 0.4s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(108, 83, 121, 0.2);
+  }
+}
+
+.w-16.h-16.rounded-full {
+  overflow: hidden;
+  border: 3px solid #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover img {
+    transform: scale(1.1);
+  }
+
+  div {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #7e638d;
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+}
+
+.text-\[\#6c5379\] {
+  color: $primary-color;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
+/* Buttons */
+button {
+  transition: all 0.3s ease;
+  border-radius: 1rem;
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  position: relative;
+  overflow: hidden;
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.3),
+      transparent
+    );
+    transition: left 0.4s ease;
+  }
+
+  &:hover:not(:disabled):before {
+    left: 100%;
+  }
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+
+  &[disabled] {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+
+  &.bg-\[\#6c5379\] {
+    background: linear-gradient(
+      135deg,
+      $primary-color,
+      lighten($primary-color, 10%)
+    );
+    &:hover {
+      background: linear-gradient(
+        135deg,
+        darken($primary-color, 10%),
+        $primary-color
+      );
+    }
+  }
+
+  &.bg-\[\#d3c1e5\] {
+    background: linear-gradient(135deg, #d3c1e5, lighten(#d3c1e5, 10%));
+    color: #1f2937;
+    &:hover {
+      background: linear-gradient(135deg, #c5b0d8, lighten(#c5b0d8, 10%));
+    }
+  }
+
+  &.bg-red-500 {
+    background: linear-gradient(
+      135deg,
+      $error-color,
+      lighten($error-color, 10%)
+    );
+    &:hover {
+      background: linear-gradient(
+        135deg,
+        darken($error-color, 10%),
+        $error-color
+      );
+    }
+  }
+}
+
+/* Chart Container */
+.chart-container {
+  padding: 2rem;
+  background: linear-gradient(145deg, #fff, lighten($card-bg, 3%));
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s ease;
+  margin-top: 2rem;
+  animation: fadeIn 0.8s ease-out;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .chart-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    background: linear-gradient(to right, #1f2937, darken($primary-color, 10%));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+canvas {
+  max-width: 100%;
+  width: 600px !important;
+  height: 400px !important;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@include respond-to(md) {
+  .dashboard-card {
+    padding: 2rem;
+    border-radius: 1.5rem;
+  }
+
+  .dashboard-title {
+    font-size: 2rem;
+  }
+
+  .dashboard-subtitle {
+    font-size: 1rem;
+  }
+
+  .summary-cards {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .summary-card {
+    min-width: 100%;
+    padding: 1.25rem;
+
+    .card-title {
+      font-size: 1rem;
+    }
+
+    .card-value {
+      font-size: 1.8rem;
+    }
+  }
+
+  .search-bar {
+    max-width: 100%;
+  }
+
+  .grid-cols-3 {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .chart-container {
+    padding: 1.5rem;
+
+    .chart-title {
+      font-size: 1.3rem;
+    }
+  }
+
+  canvas {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .flex.space-x-2 {
+    flex-direction: column;
+    gap: 0.5rem;
+
+    button {
+      width: 100%;
+    }
+  }
+}
+
+@include respond-to(sm) {
+  .dashboard-card {
+    padding: 1.5rem;
+    border-radius: 1rem;
+  }
+
+  .dashboard-title {
+    font-size: 1.8rem;
+  }
+
+  .dashboard-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .summary-card {
+    padding: 1rem;
+
+    .icon-wrapper {
+      i {
+        font-size: 1.2rem;
+      }
+    }
+
+    .card-title {
+      font-size: 0.9rem;
+    }
+
+    .card-value {
+      font-size: 1.5rem;
+    }
+  }
+
+  .search-input {
+    padding: 0.75rem 2.5rem 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .search-icon {
+    right: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .grid-cols-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .flex.space-x-2 {
+    flex-direction: column;
+    gap: 0.5rem;
+
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      font-size: 0.9rem;
+    }
+  }
+
+  .chart-container {
+    padding: 1rem;
+
+    .chart-title {
+      font-size: 1.2rem;
+    }
+  }
+
+  canvas {
+    width: 100% !important;
+    height: auto !important;
+  }
+}

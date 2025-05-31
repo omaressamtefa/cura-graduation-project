@@ -1,0 +1,523 @@
+$primary-color: #6c5379;
+$secondary-color: #6c5379;
+$error-color: #ef4444;
+$light-bg: #f8ede3;
+$card-bg: #f8ede3;
+$background-color: #f3f4f6;
+$border-color: #e5e7eb;
+
+$breakpoints: (
+  md: 767px,
+  sm: 480px,
+);
+
+// Mixins
+@mixin respond-to($breakpoint) {
+  @media (max-width: map-get($breakpoints, $breakpoint)) {
+    @content;
+  }
+}
+
+// Base Styles
+.patient-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 3rem 1rem;
+  width: 100%;
+  background: linear-gradient(
+    135deg,
+    $background-color 0%,
+    darken($background-color, 5%) 100%
+  );
+  position: relative;
+  overflow: hidden;
+
+  /* Subtle background pattern */
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.1) 1%,
+      transparent 1%
+    );
+    background-size: 20px 20px;
+    opacity: 0.3;
+  }
+}
+
+/* Form Card Styling */
+.form-card {
+  width: 100%;
+  max-width: 1400px;
+  background: linear-gradient(145deg, $card-bg, lighten($card-bg, 5%));
+  border-radius: 2rem;
+  padding: 3rem;
+  border: 1px solid $border-color;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Subtle inner glow */
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 2rem;
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.2);
+    pointer-events: none;
+  }
+}
+
+/* Header Styling */
+.form-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  animation: fadeInDown 0.6s ease-out;
+
+  .form-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #1f2937;
+    letter-spacing: -0.025em;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(to right, #1f2937, darken($primary-color, 10%));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .form-subtitle {
+    font-size: 1.2rem;
+    color: #6b7280;
+    font-weight: 400;
+    opacity: 0.9;
+    animation: fadeInUp 0.6s ease-out 0.2s;
+    animation-fill-mode: both;
+  }
+}
+
+/* Form Styling */
+.update-form {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr 1fr;
+  animation: fadeIn 0.8s ease-out;
+}
+
+/* Form Group Styling */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  position: relative;
+
+  &.full-width {
+    grid-column: span 2;
+  }
+
+  label {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1f2937;
+    letter-spacing: -0.01em;
+    transition: color 0.3s ease;
+  }
+
+  input,
+  select,
+  textarea {
+    padding: 1rem 1.25rem;
+    border: 2px solid $border-color;
+    border-radius: 1rem;
+    font-size: 1rem;
+    background: $light-bg;
+    color: #1f2937;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease,
+      transform 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: inherit;
+
+    &:focus {
+      border-color: $primary-color;
+      box-shadow: 0 0 0 4px rgba(108, 83, 121, 0.2);
+      transform: scale(1.01);
+    }
+
+    &:disabled {
+      background: darken($light-bg, 10%);
+      color: #6b7280;
+      cursor: not-allowed;
+    }
+
+    &.invalid {
+      border-color: $error-color;
+      box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+    }
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  .text-gray-500 {
+    font-size: 0.9rem;
+    color: #6b7280;
+  }
+}
+
+/* Error Text */
+.error-text {
+  font-size: 0.9rem;
+  color: $error-color;
+  margin-top: 0.25rem;
+  font-weight: 500;
+  animation: shake 0.3s ease-in-out;
+}
+
+/* Error Message */
+.error-message {
+  padding: 1.5rem;
+  color: $error-color;
+  background: linear-gradient(145deg, #fef2f2, lighten(#fef2f2, 3%));
+  border-radius: 1.5rem;
+  font-size: 1.1rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  border: 1px solid #fee2e2;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15);
+  animation: shake 0.3s ease-in-out;
+}
+
+/* Success Message */
+.text-teal-500 {
+  color: #14b8a6;
+  background: linear-gradient(145deg, #f0fdfa, lighten(#f0fdfa, 3%));
+  padding: 1.5rem;
+  border-radius: 1.5rem;
+  font-size: 1.1rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  border: 1px solid #ccfbf1;
+  box-shadow: 0 4px 12px rgba(20, 184, 166, 0.15);
+  animation: fadeIn 0.8s ease-out;
+}
+
+/* Toast Notification */
+.toast-success {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: linear-gradient(145deg, #f0fdfa, lighten(#f0fdfa, 3%));
+  color: #14b8a6;
+  padding: 1rem 1.5rem;
+  border-radius: 1rem;
+  border: 1px solid #ccfbf1;
+  box-shadow: 0 4px 12px rgba(20, 184, 166, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  animation: fadeIn 0.8s ease-out;
+}
+
+.toast-close {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: #14b8a6;
+  cursor: pointer;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: darken(#14b8a6, 10%);
+  }
+}
+
+/* Buttons */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1.5rem;
+  grid-column: span 2;
+  margin-top: 2.5rem;
+  animation: fadeIn 0.8s ease-out;
+
+  .cancel-button,
+  .submit-button {
+    padding: 1rem 2.5rem;
+    border: none;
+    border-radius: 3rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    color: #ffffff;
+
+    &:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+      );
+      transition: left 0.4s ease;
+    }
+
+    &:hover:before {
+      left: 100%;
+    }
+
+    &:hover:not([disabled]) {
+      transform: translateY(-3px);
+    }
+
+    &:active:not([disabled]) {
+      transform: translateY(1px);
+    }
+  }
+
+  .cancel-button {
+    background: linear-gradient(
+      135deg,
+      $error-color,
+      lighten($error-color, 10%)
+    );
+
+    &:hover {
+      background: linear-gradient(
+        135deg,
+        darken($error-color, 10%),
+        $error-color
+      );
+      box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
+    }
+  }
+
+  .submit-button {
+    background: linear-gradient(
+      135deg,
+      $primary-color,
+      lighten($primary-color, 10%)
+    );
+
+    &:hover:not([disabled]) {
+      background: linear-gradient(
+        135deg,
+        darken($primary-color, 10%),
+        $primary-color
+      );
+      box-shadow: 0 8px 20px rgba(108, 83, 121, 0.3);
+    }
+
+    &:disabled {
+      background: linear-gradient(135deg, #d1d5db, lighten(#d1d5db, 10%));
+      cursor: not-allowed;
+      box-shadow: none;
+      transform: none;
+    }
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+/* Responsive Design */
+@include respond-to(md) {
+  .patient-container {
+    padding: 2rem 1rem;
+  }
+
+  .form-card {
+    max-width: 100%;
+    padding: 2rem;
+    border-radius: 1.5rem;
+  }
+
+  .update-form {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .form-group {
+    input,
+    select,
+    textarea {
+      padding: 0.85rem 1rem;
+      font-size: 0.95rem;
+    }
+  }
+
+  .form-title {
+    font-size: 2rem;
+  }
+
+  .form-subtitle {
+    font-size: 1rem;
+  }
+
+  .form-actions {
+    gap: 1rem;
+
+    .cancel-button,
+    .submit-button {
+      padding: 0.85rem 2rem;
+      font-size: 0.95rem;
+    }
+  }
+
+  .error-message {
+    padding: 1.25rem;
+    font-size: 1rem;
+  }
+
+  .text-teal-500 {
+    padding: 1.25rem;
+    font-size: 1rem;
+  }
+
+  .toast-success {
+    padding: 0.85rem 1.25rem;
+    font-size: 0.95rem;
+  }
+}
+
+@include respond-to(sm) {
+  .patient-container {
+    padding: 1rem;
+    min-height: calc(100vh - 2rem);
+  }
+
+  .form-card {
+    padding: 1.5rem;
+    border-radius: 1rem;
+  }
+
+  .form-title {
+    font-size: 1.8rem;
+  }
+
+  .form-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .update-form {
+    gap: 1.25rem;
+  }
+
+  .form-group {
+    input,
+    select,
+    textarea {
+      padding: 0.75rem;
+      font-size: 0.9rem;
+    }
+
+    label {
+      font-size: 1rem;
+    }
+  }
+
+  .error-text {
+    font-size: 0.85rem;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+
+    .cancel-button,
+    .submit-button {
+      padding: 0.75rem;
+      font-size: 0.9rem;
+    }
+  }
+
+  .error-message {
+    padding: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .text-teal-500 {
+    padding: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .toast-success {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+}

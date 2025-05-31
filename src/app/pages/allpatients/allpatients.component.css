@@ -1,0 +1,230 @@
+.sidebar {
+  background-color: #ffffff;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-link {
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+}
+.sidebar-link:hover {
+  background-color: #f1f5f9;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transform: scale(1.1);
+}
+.sidebar-link.active {
+  color: #3b82f6;
+  font-weight: 600;
+  background-color: #e0f2fe;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.logout-button {
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+}
+.logout-button:hover {
+  background-color: #f1f5f9;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transform: scale(1.1);
+}
+
+.dashboard-card {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  border: none;
+}
+
+.search-container {
+  margin-bottom: 3rem; /* Increased spacing between search bar and table */
+}
+
+.search-input {
+  box-shadow: none;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 30% 40% 15% 15%; /* Adjusted for fewer columns */
+  gap: 1.5rem 0; /* 1.5rem vertical gap between rows, 0 horizontal gap */
+  width: 100%;
+}
+
+.grid-header {
+  display: contents; /* Allows child elements to participate in the grid */
+  border-bottom: 1px solid #e5e7eb; /* gray-200 */
+  margin-bottom: 1.5rem; /* Space between header and rows */
+}
+
+.grid-row {
+  display: grid;
+  grid-template-columns: subgrid; /* Inherit the grid columns from the parent */
+  grid-column: 1/-1; /* Span the entire grid width */
+  background: linear-gradient(145deg, #ffffff, #f9fafb); /* Subtle gradient for modern look */
+  border: 1px solid #e5e7eb; /* Border matching the screenshot */
+  border-radius: 0.75rem; /* Rounded corners matching the screenshot */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05); /* Default shadow for depth */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.grid-row:hover {
+  background: linear-gradient(145deg, #f9fafb, #f1f5f9); /* Slight gradient change on hover */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); /* More prominent shadow on hover */
+}
+
+.grid-row > div {
+  /* Remove card styling from individual cells */
+  background: none;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.patients-section {
+  color: #111827; /* gray-900 for darker, more professional text */
+  font-weight: 800; /* Bolder for emphasis */
+  letter-spacing: -0.025em;
+}
+
+.loading-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: transparent;
+  padding: 1.5rem;
+  color: #4b5563; /* gray-600 */
+}
+
+.error-message {
+  background-color: transparent;
+  padding: 1.5rem;
+  color: #ef4444; /* red-500 */
+}
+
+.no-data-message {
+  background-color: transparent;
+  padding: 1.5rem;
+  color: #4b5563; /* gray-600 */
+}
+
+.view-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, #3b82f6, #2563eb); /* Gradient for a modern button */
+  color: #ffffff;
+  font-size: 0.875rem; /* text-sm */
+  font-weight: 600; /* Slightly bolder */
+  padding: 0.5rem 1.25rem; /* More padding for a larger button */
+  border-radius: 0.5rem; /* Slightly larger border-radius */
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for the button */
+}
+.view-button:hover {
+  background: linear-gradient(145deg, #2563eb, #1d4ed8); /* Darker gradient on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+}
+
+.create-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, #10b981, #059669); /* Green gradient for create */
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.create-button:hover {
+  background: linear-gradient(145deg, #059669, #047857); /* Darker green on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.delete-button {
+  background-color: #f3f4f6; /* gray-100 for a visible background */
+  border-radius: 50%; /* Circular shape */
+  padding: 0; /* Remove padding to ensure perfect circle */
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 2.5rem; /* Fixed size for circle */
+  height: 2.5rem; /* Fixed size for circle */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+}
+.delete-button i {
+  color: #ef4444; /* red-500 */
+  font-size: 1.1rem; /* Slightly larger icon */
+}
+.delete-button:hover {
+  background-color: #fee2e2; /* red-100 */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* Enhanced shadow on hover */
+}
+.delete-button:hover i {
+  color: #dc2626; /* red-600 */
+}
+
+.actions-button {
+  background-color: #f3f4f6; /* gray-100 for a visible background */
+  border-radius: 50%; /* Circular shape */
+  padding: 0; /* Remove padding to ensure perfect circle */
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 2.5rem; /* Fixed size for circle */
+  height: 2.5rem; /* Fixed size for circle */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+}
+.actions-button i {
+  color: #6b7280; /* gray-500 */
+  font-size: 1.1rem; /* Slightly larger icon */
+}
+.actions-button:hover {
+  background-color: #e5e7eb; /* gray-200 */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* Enhanced shadow on hover */
+}
+.actions-button:hover i {
+  color: #3b82f6; /* blue-500 */
+}
+
+.actions-column {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem; /* Space between buttons */
+}
+
+.name-column {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #1f2937; /* gray-800 for darker text */
+  font-weight: 600; /* Bolder for emphasis */
+}
+
+.email-column {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #4b5563; /* gray-600 for secondary info */
+  font-weight: 500;
+}
+
+.view-column,
+.actions-column {
+  text-align: right;
+}/*# sourceMappingURL=allpatients.component.css.map */

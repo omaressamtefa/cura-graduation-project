@@ -1,0 +1,178 @@
+<div class="update-doctor-container">
+  <div class="form-card">
+    <div class="form-header">
+      <h2 class="form-title">Update Doctor</h2>
+      <p class="form-subtitle">
+        Update the details for
+        <span class="form-subtitle-name"
+          >{{ doctorFirstName }} {{ doctorLastName }}</span
+        >
+        below.
+      </p>
+    </div>
+
+    @if (errorMessage) {
+    <div class="error-message">
+      {{ errorMessage }}
+      @if (isDoctorNotFound) {
+      <br />You can still update the doctor by filling in the details below. }
+    </div>
+    }
+
+    <form
+      [formGroup]="updateDoctorForm"
+      (ngSubmit)="onSubmit()"
+      class="update-form"
+    >
+      <!-- First Name -->
+      <div class="form-group">
+        <label for="FirstName">First Name</label>
+        <input
+          type="text"
+          id="FirstName"
+          formControlName="FirstName"
+          placeholder="Enter first name"
+          [class.invalid]="
+            updateDoctorForm.get('FirstName')?.invalid &&
+            updateDoctorForm.get('FirstName')?.touched
+          "
+        />
+        @if (updateDoctorForm.get('FirstName')?.invalid &&
+        updateDoctorForm.get('FirstName')?.touched) {
+        <span class="error-text">First Name is required.</span>
+        }
+      </div>
+
+      <!-- Last Name -->
+      <div class="form-group">
+        <label for="LastName">Last Name</label>
+        <input
+          type="text"
+          id="LastName"
+          formControlName="LastName"
+          placeholder="Enter last name"
+          [class.invalid]="
+            updateDoctorForm.get('LastName')?.invalid &&
+            updateDoctorForm.get('LastName')?.touched
+          "
+        />
+        @if (updateDoctorForm.get('LastName')?.invalid &&
+        updateDoctorForm.get('LastName')?.touched) {
+        <span class="error-text">Last Name is required.</span>
+        }
+      </div>
+
+      <!-- Email -->
+      <div class="form-group full-width">
+        <label for="Email">Email</label>
+        <input
+          type="email"
+          id="Email"
+          formControlName="Email"
+          placeholder="Enter email"
+          [class.invalid]="
+            updateDoctorForm.get('Email')?.invalid &&
+            updateDoctorForm.get('Email')?.touched
+          "
+        />
+        @if (updateDoctorForm.get('Email')?.invalid &&
+        updateDoctorForm.get('Email')?.touched) {
+        <span class="error-text">
+          @if (updateDoctorForm.get('Email')?.errors?.['required']) { Email is
+          required. } @if (updateDoctorForm.get('Email')?.errors?.['email']) {
+          Please enter a valid email address. }
+        </span>
+        }
+      </div>
+
+      <!-- Specialty -->
+      <div class="form-group">
+        <label for="Specialty">Specialty</label>
+        <select
+          id="Specialty"
+          formControlName="Specialty"
+          [class.invalid]="
+            updateDoctorForm.get('Specialty')?.invalid &&
+            updateDoctorForm.get('Specialty')?.touched
+          "
+        >
+          <option value="" disabled>Select specialty</option>
+          <option value="Cardiology">Cardiology</option>
+          <option value="Neurology">Neurology</option>
+          <option value="Pediatrics">Pediatrics</option>
+          <option value="Orthopedics">Orthopedics</option>
+          <option value="Dermatology">Dermatology</option>
+        </select>
+        @if (updateDoctorForm.get('Specialty')?.invalid &&
+        updateDoctorForm.get('Specialty')?.touched) {
+        <span class="error-text">
+          @if (updateDoctorForm.get('Specialty')?.errors?.['required']) {
+          Specialty is required. } @if
+          (updateDoctorForm.get('Specialty')?.errors?.['invalidSpecialty']) {
+          Invalid specialty. Must be one of: Cardiology, Neurology, Pediatrics,
+          Orthopedics, Dermatology. }
+        </span>
+        }
+      </div>
+
+      <!-- Date of Birth -->
+      <div class="form-group">
+        <label for="BirthDate">Date of Birth</label>
+        <input
+          type="date"
+          id="BirthDate"
+          formControlName="BirthDate"
+          [class.invalid]="
+            updateDoctorForm.get('BirthDate')?.invalid &&
+            updateDoctorForm.get('BirthDate')?.touched
+          "
+        />
+        @if (updateDoctorForm.get('BirthDate')?.invalid &&
+        updateDoctorForm.get('BirthDate')?.touched) {
+        <span class="error-text">
+          @if (updateDoctorForm.get('BirthDate')?.errors?.['required']) { Date
+          of Birth is required. } @if
+          (updateDoctorForm.get('BirthDate')?.errors?.['invalidDate']) { Please
+          enter a valid date between 1900 and today. }
+        </span>
+        }
+      </div>
+
+      <!-- Gender -->
+      <div class="form-group">
+        <label for="Gender">Gender</label>
+        <select
+          id="Gender"
+          formControlName="Gender"
+          [class.invalid]="
+            updateDoctorForm.get('Gender')?.invalid &&
+            updateDoctorForm.get('Gender')?.touched
+          "
+        >
+          <option value="" disabled>Select gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+        @if (updateDoctorForm.get('Gender')?.invalid &&
+        updateDoctorForm.get('Gender')?.touched) {
+        <span class="error-text">Gender is required.</span>
+        }
+      </div>
+
+      <!-- Buttons -->
+      <div class="form-actions">
+        <button type="button" class="cancel-button" (click)="goBack()">
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="submit-button"
+          [disabled]="updateDoctorForm.invalid"
+        >
+          Update Doctor
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

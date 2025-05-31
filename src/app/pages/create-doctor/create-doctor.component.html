@@ -1,0 +1,243 @@
+<div class="update-doctor-container">
+  <div class="form-card">
+    <div class="form-header">
+      <h2 class="form-title">Create New Doctor</h2>
+      <p class="form-subtitle">Fill in the details to register a new doctor.</p>
+    </div>
+
+    <div class="error-message" [hidden]="!errorMessage">
+      {{ errorMessage }}
+    </div>
+
+    <form [formGroup]="doctorForm" (ngSubmit)="onSubmit()" class="update-form">
+      <!-- First Name -->
+      <div class="form-group">
+        <label for="firstName">First Name</label>
+        <input
+          id="firstName"
+          formControlName="firstName"
+          type="text"
+          placeholder="Enter first name"
+          [class.invalid]="
+            doctorForm.get('firstName')?.invalid &&
+            doctorForm.get('firstName')?.touched
+          "
+          (input)="clearMessages()"
+        />
+        <span
+          class="error-text"
+          [hidden]="
+            !(
+              doctorForm.get('firstName')?.invalid &&
+              doctorForm.get('firstName')?.touched
+            )
+          "
+        >
+          First name is required and must be at least 2 characters.
+        </span>
+      </div>
+
+      <!-- Last Name -->
+      <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input
+          id="lastName"
+          formControlName="lastName"
+          type="text"
+          placeholder="Enter last name"
+          [class.invalid]="
+            doctorForm.get('lastName')?.invalid &&
+            doctorForm.get('lastName')?.touched
+          "
+          (input)="clearMessages()"
+        />
+        <span
+          class="error-text"
+          [hidden]="
+            !(
+              doctorForm.get('lastName')?.invalid &&
+              doctorForm.get('lastName')?.touched
+            )
+          "
+        >
+          Last name is required and must be at least 2 characters.
+        </span>
+      </div>
+
+      <!-- Email -->
+      <div class="form-group full-width">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          formControlName="email"
+          type="email"
+          placeholder="Enter email"
+          [class.invalid]="
+            doctorForm.get('email')?.invalid && doctorForm.get('email')?.touched
+          "
+          (input)="clearMessages()"
+        />
+        <span
+          class="error-text"
+          [hidden]="
+            !(
+              doctorForm.get('email')?.invalid &&
+              doctorForm.get('email')?.touched
+            )
+          "
+        >
+          <span [hidden]="!doctorForm.get('email')?.errors?.['required']">
+            Email is required.
+          </span>
+          <span [hidden]="!doctorForm.get('email')?.errors?.['email']">
+            Please enter a valid email address.
+          </span>
+        </span>
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          id="password"
+          formControlName="password"
+          type="password"
+          placeholder="Enter password"
+          [class.invalid]="
+            doctorForm.get('password')?.invalid &&
+            doctorForm.get('password')?.touched
+          "
+          (input)="clearMessages()"
+        />
+        <span
+          class="error-text"
+          [hidden]="
+            !(
+              doctorForm.get('password')?.invalid &&
+              doctorForm.get('password')?.touched
+            )
+          "
+        >
+          Password is required and must be at least 6 characters.
+        </span>
+      </div>
+
+      <!-- Specialty -->
+      <div class="form-group">
+        <label for="specialty">Specialty</label>
+        <select
+          id="specialty"
+          formControlName="specialty"
+          [class.invalid]="
+            doctorForm.get('specialty')?.invalid &&
+            doctorForm.get('specialty')?.touched
+          "
+          (change)="clearMessages()"
+        >
+          <option value="" disabled>Select specialty</option>
+          <option value="Cardiology">Cardiology</option>
+          <option value="Neurology">Neurology</option>
+          <option value="Pediatrics">Pediatrics</option>
+          <option value="Orthopedics">Orthopedics</option>
+          <option value="Dermatology">Dermatology</option>
+        </select>
+        <span
+          class="error-text"
+          [hidden]="
+            !(
+              doctorForm.get('specialty')?.invalid &&
+              doctorForm.get('specialty')?.touched
+            )
+          "
+        >
+          Specialty is required.
+        </span>
+      </div>
+
+      <!-- Birth Date -->
+      <div class="form-group">
+        <label for="birthDate">Date of Birth</label>
+        <input
+          id="birthDate"
+          formControlName="birthDate"
+          type="date"
+          [class.invalid]="
+            doctorForm.get('birthDate')?.invalid &&
+            doctorForm.get('birthDate')?.touched
+          "
+          (input)="clearMessages()"
+        />
+        <span
+          class="error-text"
+          [hidden]="
+            !(
+              doctorForm.get('birthDate')?.invalid &&
+              doctorForm.get('birthDate')?.touched
+            )
+          "
+        >
+          Date of Birth is required.
+        </span>
+      </div>
+
+      <!-- Gender -->
+      <div class="form-group">
+        <label for="gender">Gender</label>
+        <select
+          id="gender"
+          formControlName="gender"
+          [class.invalid]="
+            doctorForm.get('gender')?.invalid &&
+            doctorForm.get('gender')?.touched
+          "
+          (change)="clearMessages()"
+        >
+          <option value="" disabled>Select gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+        <span
+          class="error-text"
+          [hidden]="
+            !(
+              doctorForm.get('gender')?.invalid &&
+              doctorForm.get('gender')?.touched
+            )
+          "
+        >
+          Gender is required.
+        </span>
+      </div>
+
+      <!-- Image Upload -->
+      <div class="form-group full-width">
+        <label for="image">Profile Image (Optional)</label>
+        <input
+          id="image"
+          type="file"
+          accept=".jpg,.jpeg,.png,.gif"
+          (change)="onFileChange($event)"
+        />
+        <span class="text-gray-500 text-sm mt-1">
+          JPG, JPEG, PNG, or GIF (max 5MB)
+        </span>
+      </div>
+
+      <!-- Form Actions -->
+      <div class="form-actions">
+        <button type="button" class="cancel-button" (click)="cancel()">
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="submit-button"
+          [disabled]="doctorForm.invalid || isSubmitting"
+        >
+          <span [hidden]="isSubmitting">Create Doctor</span>
+          <span [hidden]="!isSubmitting">Creating...</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

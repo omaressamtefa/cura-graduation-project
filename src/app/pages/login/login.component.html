@@ -1,0 +1,86 @@
+<section
+  class="Login min-h-screen flex items-center justify-center bg-[#f8ede3] p-4"
+>
+  <div
+    class="log-card w-full max-w-4xl rounded-2xl p-12 transition-all duration-300"
+    style="
+      color: #6c5379;
+      background: #f8ede3;
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px #7e638d;
+    "
+  >
+    <!-- Header  -->
+    <div class="text-center space-y-4 mb-8">
+      <div
+        class="inline-block p-5 bg-[#6c5379] rounded-full shadow-lg logo-icon relative group mx-auto"
+      >
+        <img src="stethoscope.png" alt="Stethoscope" class="w-14 h-14" />
+      </div>
+      <h2 class="text-4xl font-extrabold text-[#6c5379]">Cura</h2>
+      <p class="text-[#6c5379] text-xl title">Sign in to your healthcare hub</p>
+    </div>
+
+    <!-- Form  -->
+    <form [formGroup]="loginForm" (ngSubmit)="login()" class="space-y-5">
+      <!-- Email -->
+      <div class="relative group">
+        <label for="email" class="block text-[#6c5379] mb-1 ml-1"
+          >Email Address</label
+        >
+        <input
+          formControlName="email"
+          type="email"
+          id="email"
+          autocomplete="email"
+          class="w-full px-5 py-3 rounded-lg bg-white border border-[#d3c1e5] text-[#6c5379] placeholder-[#6c5379]/70 focus:border-[#6c5379] focus:ring-2 focus:ring-[#6c5379]/20 transition-all duration-300 text-base"
+          (blur)="validateField('email')"
+        />
+        <i
+          class="fas fa-envelope absolute right-4 top-9 text-[#6c5379] text-lg group-focus-within:text-[#7e638d] transition-colors duration-300"
+        ></i>
+      </div>
+
+      <!-- Password -->
+      <div class="relative group">
+        <label for="password" class="block text-[#6c5379] mb-1 ml-1"
+          >Password</label
+        >
+        <input
+          formControlName="password"
+          type="password"
+          id="password"
+          autocomplete="current-password"
+          class="w-full px-5 py-3 rounded-lg bg-white border border-[#d3c1e5] text-[#6c5379] placeholder-[#6c5379]/70 focus:border-[#6c5379] focus:ring-2 focus:ring-[#6c5379]/20 transition-all duration-300 text-base"
+          (blur)="validateField('password')"
+        />
+        <i
+          class="fas fa-lock absolute right-4 top-9 text-[#6c5379] text-lg group-focus-within:text-[#7e638d] transition-colors duration-300"
+        ></i>
+      </div>
+
+      <!-- Forgot Password -->
+      <div class="flex justify-end items-center -mt-2">
+        <a
+          routerLink="/reset-password"
+          class="text-[#7e638d] hover:text-[#6c5379] font-medium text-base transition-all duration-200 hover:underline"
+        >
+          Forgot Password?
+        </a>
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        [disabled]="isLoading"
+        class="w-full py-3 px-6 bg-[#6c5379] hover:bg-[#7e638d] text-white font-semibold rounded-lg shadow-md hover:shadow-xl transition-all duration-300 relative overflow-hidden text-lg group mt-4"
+      >
+        <span class="relative z-10" [class.opacity-0]="isLoading">Sign In</span>
+        <span
+          class="absolute inset-0 flex items-center justify-center fa-spin fas fa-spinner z-10 text-xl"
+          [class.hidden]="!isLoading"
+        ></span>
+      </button>
+    </form>
+  </div>
+</section>

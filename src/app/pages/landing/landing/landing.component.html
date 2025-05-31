@@ -1,0 +1,56 @@
+<div
+  class="main min-h-screen flex flex-col relative overflow-hidden update-doctor-container"
+>
+  <div class="background-elements">
+    <div class="circle-1"></div>
+    <div class="circle-2"></div>
+    <div class="circle-3"></div>
+  </div>
+
+  <nav class="navbar mx-auto flex items-center justify-between px-8 form-card">
+    <a [routerLink]="['/login']" class="icon flex items-center">
+      <h1 class="logo">𝑪ü𝑹a</h1>
+    </a>
+    <div class="menu">
+      <ul class="flex items-center space-x-6">
+        <li>
+          <a (click)="showAbout()" class="menu-link">ABOUT</a>
+        </li>
+        <li>
+          <a (click)="showTerms()" class="menu-link">TERMS & CONDITIONS</a>
+        </li>
+        <li>
+          <a (click)="showContact()" class="menu-link">CONTACT US</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Content -->
+  <div class="content mx-auto flex justify-between items-center px-8">
+    <div class="container-text">
+      <h2 class="gradient-text animate-fade-in">
+        <span>WELCOME TO OUR</span><br />MEDICAL HISTORY
+      </h2>
+      <h3 class="animate-fade-in-delay">
+        Healthcare Data at <span>Your Fingertips</span>
+      </h3>
+      <h5 class="animate-fade-in-delay-2">
+        <span>Safe, Simple, Smart</span>
+      </h5>
+      <a [routerLink]="['/login']">
+        <button class="btnn mt-8 animate-fade-in-delay-3">
+          <span class="btnn-text">LOGIN</span>
+          <span class="btnn-hover">GET STARTED</span>
+        </button>
+      </a>
+    </div>
+    <div class="container-img ml-24">
+      <img
+        src="https://www.advancedmd.com/wp-content/uploads/2024/10/advancedmd-lifestyle-docMobileEHR.png"
+        alt="Doctor with smartphone"
+        class="animate-float"
+      />
+    </div>
+  </div>
+</div>

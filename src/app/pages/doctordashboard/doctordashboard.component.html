@@ -1,0 +1,159 @@
+<div class="dashboard-card">
+  @if (role === 'doctor') {
+  <div class="summary-cards">
+    <!-- Total Patients Card -->
+    <div class="summary-card total-patients">
+      <div class="card-content">
+        <div class="text-content">
+          <h3 class="card-title">Total Patients</h3>
+          <p class="card-value">{{ totalPatients }}</p>
+        </div>
+        <div class="icon-wrapper">
+          <i class="fas fa-users"></i>
+        </div>
+      </div>
+    </div>
+    <!-- New Patients Card -->
+    <div class="summary-card new-patients">
+      <div class="card-content">
+        <div class="text-content">
+          <h3 class="card-title">New Patients</h3>
+          <p class="card-value">{{ newPatients }}</p>
+        </div>
+        <div class="icon-wrapper">
+          <i class="fas fa-user-plus"></i>
+        </div>
+      </div>
+    </div>
+    <!-- Patients This Month Card -->
+    <div class="summary-card patients-this-month">
+      <div class="card-content">
+        <div class="text-content">
+          <h3 class="card-title">Patients This Month</h3>
+          <p class="card-value">{{ patientsThisMonth }}</p>
+        </div>
+        <div class="icon-wrapper">
+          <i class="fas fa-calendar-plus"></i>
+        </div>
+      </div>
+    </div>
+    <!-- Appointments Card -->
+    <div class="summary-card appointments">
+      <div class="card-content">
+        <div class="text-content">
+          <h3 class="card-title">Appointments</h3>
+          <p class="card-value">{{ appointments }}</p>
+        </div>
+        <div class="icon-wrapper">
+          <i class="fas fa-calendar-check"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+
+  <div class="dashboard-header">
+    <h2 class="dashboard-title">My Patients</h2>
+    <p class="dashboard-subtitle">
+      List of all patients for Doctor
+      {{ doctorFirstName || "Doctor" }} {{ doctorLastName || "" }} in the system
+    </p>
+  </div>
+
+  <div class="search-create-container">
+    <div class="search-bar">
+      <input
+        type="text"
+        [ngModel]="searchTerm()"
+        (ngModelChange)="searchTerm.set($event); onSearchChange()"
+        placeholder="Search patients..."
+        class="search-input"
+      />
+      <i class="fas fa-search search-icon"></i>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    @for (patient of filteredPatients(); track patient.id) {
+    <div
+      class="bg-[#f8ede3] rounded-xl p-6 shadow-lg border border-[#d3c1e5] transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+    >
+      <div class="flex items-center mb-4">
+        <div class="w-16 h-16 rounded-full bg-[#7e638d] overflow-hidden mr-4">
+          @if (safeImageUrlMapPatients[patient.id] &&
+          !imageLoadFailedMapPatients[patient.id]) {
+          <img
+            [src]="safeImageUrlMapPatients[patient.id]"
+            [alt]="patient.firstName + ' ' + patient.lastName"
+            class="w-full h-full object-cover rounded-full transition-transform duration-300 hover:scale-105"
+            (error)="handleImageErrorPatient(patient.id)"
+          />
+          } @else {
+          <div
+            class="w-full h-full flex items-center justify-center text-white text-2xl font-semibold"
+          >
+            {{ patient.firstName.charAt(0) }}{{ patient.lastName.charAt(0) }}
+          </div>
+          }
+        </div>
+        <div>
+          <h3 class="text-xl font-bold text-[#6c5379]">
+            {{ patient.firstName }} {{ patient.lastName }}
+          </h3>
+          <p class="text-[#7e638d]">{{ patient.gender }}</p>
+        </div>
+      </div>
+      <div class="space-y-2 mb-4">
+        <p class="text-[#6c5379] text-base">
+          <i class="fas fa-envelope mr-2"></i>{{ patient.email }}
+        </p>
+        <p class="text-[#6c5379] text-base">
+          <i class="fas fa-tint mr-2"></i>{{ patient.bloodType || "N/A" }}
+        </p>
+        <p class="text-[#6c5379] text-base">
+          <i class="fas fa-birthday-cake mr-2"></i
+          >{{ calculateAge(patient.birthDate) }} years
+        </p>
+      </div>
+      <div class="flex space-x-2">
+        <button
+          (click)="viewPatient(patient.id)"
+          class="flex-1 bg-[#6c5379] hover:bg-[#7a1f69b8] text-white py-2 rounded-lg transition-all duration-300"
+        >
+          <i class="fas fa-eye mr-2"></i>View
+        </button>
+        <button
+          (click)="updatePatient(patient.id)"
+          class="flex-1 bg-[#d3c1e5] hover:bg-[#f1c8a7] text-[#6c5379] py-2 rounded-lg transition-all duration-300"
+        >
+          <i class="fas fa-edit mr-2"></i>Edit
+        </button>
+        <button
+          (click)="deletePatient(patient.id)"
+          class="flex-1 bg-red-500 hover:bg-[#860d9e] text-white py-2 rounded-lg transition-all duration-300"
+        >
+          <i class="fas fa-trash mr-2"></i>Delete
+        </button>
+      </div>
+    </div>
+    }
+  </div>
+
+  @if (isLoadingPatients()) {
+  <div class="text-center py-8">
+    <i class="fas fa-spinner fa-spin text-3xl text-[#6c5379]"></i>
+  </div>
+  } @if (hasErrorPatients()) {
+  <div class="text-center py-8 text-red-500">
+    <i class="fas fa-exclamation-triangle mr-2"></i>{{ errorMessagePatients() }}
+  </div>
+  } @if (filteredPatients().length === 0 && !isLoadingPatients() &&
+  !hasErrorPatients()) {
+  <div class="text-center py-8 text-[#6c5379]">No patients found.</div>
+  }
+
+  <div class="chart-container mt-6">
+    <h3 class="chart-title">Patient Statistics</h3>
+    <canvas #patientChart></canvas>
+  </div>
+</div>

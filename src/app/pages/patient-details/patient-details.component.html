@@ -1,0 +1,188 @@
+<section class="details-container">
+  <div class="details-card">
+    @if (isLoading) {
+    <div class="loading-spinner">
+      <svg class="spinner-icon" viewBox="0 0 24 24">
+        <circle
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="$primary-color"
+          stroke-width="2"
+          fill="none"
+        />
+      </svg>
+      Loading Patient Data...
+    </div>
+    } @if (errorMessage && !isLoading) {
+    <div class="error-message">
+      <i class="fas fa-exclamation-circle"></i>
+      {{ errorMessage }}
+    </div>
+    } @if (!isLoading && !errorMessage && patient) {
+    <div class="header">
+      <h2 class="header-title">Patient Profile</h2>
+      <p class="header-subtitle">
+        Comprehensive details for {{ patient.firstName || "Unknown" }}
+        {{ patient.lastName || "Unknown" }}
+      </p>
+    </div>
+
+    <div class="profile-section">
+      <div class="avatar">
+        @if (safeImageUrl && !imageLoadFailed) {
+        <img
+          [src]="safeImageUrl"
+          alt="Patient Profile Image"
+          class="profile-image"
+          (error)="handleImageError()"
+        />
+        } @else {
+        <i class="fas fa-user"></i>
+        }
+      </div>
+      <h3 class="profile-name">
+        {{ patient.firstName || "Unknown" }} {{ patient.lastName || "Unknown" }}
+      </h3>
+      <p class="profile-role">Patient</p>
+    </div>
+
+    <div class="details-section">
+      @if (departmentError) {
+      <div class="error-message">
+        <i class="fas fa-exclamation-circle"></i>
+        {{ departmentError }}
+      </div>
+      }
+
+      <div class="details-grid">
+        <div class="detail-item">
+          <span class="detail-label">Patient ID</span>
+          <span class="detail-value centered-text">{{
+            patient.id || "N/A"
+          }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Email</span>
+          <span class="detail-value centered-text">{{
+            patient.email || "N/A"
+          }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Date of Birth</span>
+          <span class="detail-value centered-text">{{
+            patient.birthDate || "N/A"
+          }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Gender</span>
+          <span class="detail-value centered-text">{{
+            patient.gender || "N/A"
+          }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Created At</span>
+          <span class="detail-value centered-text">
+            {{
+              patient.createdAt ? (patient.createdAt | date : "medium") : "N/A"
+            }}
+          </span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Blood Type</span>
+          <span class="detail-value centered-text">{{
+            patient.bloodType || "N/A"
+          }}</span>
+        </div>
+        <div class="detail-item full-width">
+          <span class="detail-label">General Notes</span>
+          <span class="detail-value centered-text">
+            {{
+              patient.notes ||
+                (patient.department && patient.department[0]?.notes) ||
+                "Not specified"
+            }}
+          </span>
+        </div>
+        <div class="detail-item full-width">
+          <span class="detail-label">X-Ray Image</span>
+          <span class="detail-value centered-text">
+            @if (safeXRayImageUrl && !xRayImageLoadFailed) {
+            <img
+              [src]="safeXRayImageUrl"
+              alt="Patient X-Ray Image"
+              class="basic-image"
+              (error)="handleXRayImageError()"
+            />
+            } @else {
+            <span>N/A</span>
+            }
+          </span>
+        </div>
+        <div class="detail-item full-width">
+          <span class="detail-label">Lab Results Image</span>
+          <span class="detail-value centered-text">
+            @if (safeLabResultsImageUrl && !labResultsImageLoadFailed) {
+            <img
+              [src]="safeLabResultsImageUrl"
+              alt="Patient Lab Results Image"
+              class="basic-image"
+              (error)="handleLabResultsImageError()"
+            />
+            } @else {
+            <span>N/A</span>
+            }
+          </span>
+        </div>
+      </div>
+
+      <div class="treatment-history-section">
+        <h3 class="section-title">Treatment History</h3>
+        @if (patient.department && patient.department.length > 0) { @for
+        (history of patient.department; track history) {
+        <div class="treatment-history-card">
+          <div class="detail-item">
+            <span class="detail-label">Assigned Doctor</span>
+            <span class="detail-value centered-text">
+              {{ history.doctorFirstName || "N/A" }}
+              {{ history.doctorLastName || "N/A" }}
+            </span>
+          </div>
+          <div class="detail-item full-width">
+            <span class="detail-label">Diagnosis</span>
+            <span class="detail-value centered-text">{{
+              history.diagnosis || "Not specified"
+            }}</span>
+          </div>
+          <div class="detail-item full-width">
+            <span class="detail-label">Treatment Plan</span>
+            <span class="detail-value centered-text">{{
+              history.treatment || "Not specified"
+            }}</span>
+          </div>
+          <div class="detail-item full-width">
+            <span class="detail-label">Doctor's Notes</span>
+            <span class="detail-value centered-text">{{
+              history.notes || "Not specified"
+            }}</span>
+          </div>
+        </div>
+        } } @else {
+        <p class="centered-text">No treatment history available.</p>
+        }
+      </div>
+    </div>
+
+    <div class="actions">
+      @if (role === 'admin' || role === 'doctor') {
+      <button class="edit-button" (click)="editPatient(patient.id)">
+        <i class="fas fa-edit"></i> Edit Profile
+      </button>
+      <button class="delete-button" (click)="deletePatient(patient.id)">
+        <i class="fas fa-trash"></i> Delete Profile
+      </button>
+      }
+    </div>
+    }
+  </div>
+</section>
