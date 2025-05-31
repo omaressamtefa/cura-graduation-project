@@ -43,16 +43,16 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.flowbiteService.loadFlowbite((flowbite) => {});
 
-    // Check authentication and route on app load
     if (isPlatformBrowser(this.platformId)) {
       this.currentRoute = this.router.url;
       this.isLoggedIn = this.authService.isLoggedIn();
 
+      // Redirect authenticated users from / or /login
       if (this.isLoggedIn && ['/', '/login'].includes(this.currentRoute)) {
         this.redirectToDashboard();
       }
 
-      // Log out on page close
+      // Log out on tab close
       window.addEventListener('beforeunload', () => {
         if (this.authService.isLoggedIn()) {
           this.authService.logout();

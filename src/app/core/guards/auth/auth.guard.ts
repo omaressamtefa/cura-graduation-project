@@ -56,12 +56,13 @@ export class AuthGuard implements CanActivate {
           return false; // Prevent access to public route
         } else {
           console.error('AuthGuard - Role or UserId not set');
-          this.authService.logout(); // Clear invalid state and redirect to login
+          this.authService.logout();
+          this.router.navigate(['/']);
           return false;
         }
       }
       console.log('AuthGuard - Allowing public route:', currentUrl);
-      return true; // Allow unauthenticated users to access public routes
+      return true;
     }
 
     // Handle protected routes
@@ -74,12 +75,10 @@ export class AuthGuard implements CanActivate {
     }
 
     console.log(
-      'AuthGuard - User not authenticated, redirecting to /login from:',
+      'AuthGuard - User not authenticated, redirecting to / from:',
       currentUrl
     );
-    this.router.navigate(['/login'], {
-      queryParams: { returnUrl: currentUrl },
-    });
+    this.router.navigate(['/']);
     return false;
   }
 }
