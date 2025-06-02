@@ -46,7 +46,7 @@ export class PatientDashboardComponent implements OnInit {
   calculateAge(birthDate: string | null): number | null {
     if (!birthDate) return null;
     const birth = new Date(birthDate);
-    const today = new Date('2025-05-26'); // Current date as per system
+    const today = new Date('2025-06-01'); // Current date as per system
     const age = today.getFullYear() - birth.getFullYear();
     const monthDiff = today.getMonth() - birth.getMonth();
     if (
@@ -124,8 +124,15 @@ export class PatientDashboardComponent implements OnInit {
   }
 
   showWelcomeAlert(): void {
+    if (sessionStorage.getItem('patientWelcomeShown') === 'true') {
+      console.log(
+        'Patient welcome alert already shown in this session, skipping.'
+      );
+      return;
+    }
+
     Swal.fire({
-      title: `Welcome to Our Website, Mr. ${this.userName}`,
+      title: `Welcome to Our Website, ${this.userName}`,
       text: 'At CuRa, we are committed to providing high-quality healthcare while ensuring that every patient receives personalized and efficient medical care. Our comprehensive Medical History System allows patients and healthcare providers to access, manage, and update critical health records securely and conveniently.',
       icon: 'success',
       confirmButtonColor: '#14b8a6',
@@ -135,6 +142,7 @@ export class PatientDashboardComponent implements OnInit {
       cancelButtonText: 'Cancel',
       allowOutsideClick: false,
     }).then((result) => {
+      sessionStorage.setItem('patientWelcomeShown', 'true');
       if (result.isConfirmed && this.userRole && this.userId) {
         this.router.navigate([`/profile/${this.userRole}/${this.userId}`]);
       }

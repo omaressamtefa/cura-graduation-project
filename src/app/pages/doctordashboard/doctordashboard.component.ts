@@ -28,8 +28,8 @@ export class DoctorDashboardComponent implements OnInit, AfterViewInit {
   doctorLastName: string | null = null;
   totalPatients: number = 0;
   newPatients: number = 0;
-  patientsThisMonth: number; // New statistic
-  appointments: number; // New statistic
+  patientsThisMonth: number;
+  appointments: number;
   searchTerm = signal<string>('');
   filteredPatients = signal<any[]>([]);
   allPatients = signal<any[]>([]);
@@ -46,7 +46,7 @@ export class DoctorDashboardComponent implements OnInit, AfterViewInit {
     datasets: [
       {
         label: 'Patient Statistics',
-        data: [0, 0, 0, 0], // Updated to include new stats
+        data: [0, 0, 0, 0],
         backgroundColor: ['#6c5379', '#7a1f69b8', '#4dd4c6', '#f1c8a7'],
         borderColor: ['#6c5379', '#7a1f69b8', '#4dd4c6', '#f1c8a7'],
         borderWidth: 1,
@@ -68,7 +68,6 @@ export class DoctorDashboardComponent implements OnInit, AfterViewInit {
     private toastr: ToastrService,
     private sanitizer: DomSanitizer
   ) {
-    // Generate random values for new statistics (1 to 30)
     this.patientsThisMonth = Math.floor(Math.random() * 30) + 1;
     this.appointments = Math.floor(Math.random() * 30) + 1;
   }
@@ -91,10 +90,17 @@ export class DoctorDashboardComponent implements OnInit, AfterViewInit {
   }
 
   loadUserDetails(): void {
+    // Check if welcome alert has already been shown in this session
+    if (sessionStorage.getItem('doctorWelcomeShown') === 'true') {
+      console.log('Welcome alert already shown in this session, skipping.');
+      return;
+    }
+
     this.adminService.getUserDetails().subscribe({
       next: (response) => {
         this.doctorFirstName = response.user.firstName;
         this.doctorLastName = response.user.lastName;
+        // Show welcome alert and set flag
         Swal.fire({
           title: 'Welcome to Our System!',
           text: `Hello, Dr. ${this.doctorFirstName || 'Doctor'} ${
@@ -108,10 +114,14 @@ export class DoctorDashboardComponent implements OnInit, AfterViewInit {
           customClass: {
             confirmButton: 'swal-confirm-button',
           },
+        }).then(() => {
+          // Set flag in sessionStorage after alert is shown
+          sessionStorage.setItem('doctorWelcomeShown', 'true');
         });
       },
       error: (err) => {
         console.error('Error fetching user details:', err);
+        // Show fallback welcome alert and set flag
         Swal.fire({
           title: 'Welcome to Our System!',
           text: "Hello, Doctor! We're thrilled to have you manage your patients with us.",
@@ -123,6 +133,9 @@ export class DoctorDashboardComponent implements OnInit, AfterViewInit {
           customClass: {
             confirmButton: 'swal-confirm-button',
           },
+        }).then(() => {
+          // Set flag in sessionStorage after alert is shown
+          sessionStorage.setItem('doctorWelcomeShown', 'true');
         });
       },
     });
@@ -203,7 +216,7 @@ export class DoctorDashboardComponent implements OnInit, AfterViewInit {
 
     const chartWidth = canvas.width - 60;
     const chartHeight = canvas.height - 60;
-    const barWidth = 40; // Reduced bar width to fit more bars
+    const barWidth = 40;
     const maxDataValue = Math.max(...this.chartData.datasets[0].data, 1);
     const scaleY = chartHeight / maxDataValue;
 
@@ -242,7 +255,7 @@ export class DoctorDashboardComponent implements OnInit, AfterViewInit {
 
     ctx.textAlign = 'center';
     this.chartData.labels.forEach((label, index) => {
-      const xPos = 100 + index * 80; // Adjusted spacing for more bars
+      const xPos = 100 + index * 80;
       const barHeight = this.chartData.datasets[0].data[index] * scaleY;
 
       ctx.fillStyle = this.chartData.datasets[0].backgroundColor[index];

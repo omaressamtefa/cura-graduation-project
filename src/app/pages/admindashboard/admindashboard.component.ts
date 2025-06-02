@@ -43,16 +43,13 @@ export class AdmindashboardComponent implements OnInit, AfterViewInit {
 
   role: string | null = null;
 
-  // Summary card data
   totalDoctors: number = 0;
   totalPatients: number = 0;
-  appointments: number; // Fixed random value
+  appointments: number;
 
-  // Image handling for doctors
   safeImageUrlMapDoctors: { [key: string]: SafeUrl } = {};
   imageLoadFailedMapDoctors: { [key: string]: boolean } = {};
 
-  // Image handling for patients
   safeImageUrlMapPatients: { [key: string]: SafeUrl } = {};
   imageLoadFailedMapPatients: { [key: string]: boolean } = {};
 
@@ -60,7 +57,6 @@ export class AdmindashboardComponent implements OnInit, AfterViewInit {
   @ViewChild('systemChart') systemChart!: ElementRef<HTMLCanvasElement>;
   private chartInstance: Chart | undefined;
 
-  // Base URL for relative image paths
   private baseApiUrl: string = 'https://cura.runasp.net';
   private fallbackImageUrl: string = '/assets/images/default-user.jpg';
   private isDev: boolean = window.location.hostname === 'localhost';
@@ -72,7 +68,6 @@ export class AdmindashboardComponent implements OnInit, AfterViewInit {
     private toastr: ToastrService,
     private sanitizer: DomSanitizer
   ) {
-    // Generate fixed random value for appointments (1 to 30)
     this.appointments = Math.floor(Math.random() * 30) + 1;
   }
 

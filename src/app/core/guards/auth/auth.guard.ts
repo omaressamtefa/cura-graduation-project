@@ -53,7 +53,7 @@ export class AuthGuard implements CanActivate {
             console.warn('AuthGuard - Unknown role:', role);
             this.router.navigate(['/home']);
           }
-          return false; // Prevent access to public route
+          return false;
         } else {
           console.error('AuthGuard - Role or UserId not set');
           this.authService.logout();

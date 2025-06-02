@@ -33,7 +33,6 @@ export class AppComponent implements OnInit {
         this.currentRoute = event.urlAfterRedirects;
         this.isLoggedIn = this.authService.isLoggedIn();
 
-        // Redirect authenticated users from / or /login
         if (this.isLoggedIn && ['/', '/login'].includes(this.currentRoute)) {
           this.redirectToDashboard();
         }
@@ -46,8 +45,6 @@ export class AppComponent implements OnInit {
     if (isPlatformBrowser(this.platformId)) {
       this.currentRoute = this.router.url;
       this.isLoggedIn = this.authService.isLoggedIn();
-
-      // Redirect authenticated users from / or /login
       if (this.isLoggedIn && ['/', '/login'].includes(this.currentRoute)) {
         this.redirectToDashboard();
       }

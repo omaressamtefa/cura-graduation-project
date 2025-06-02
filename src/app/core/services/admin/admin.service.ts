@@ -687,7 +687,7 @@ export class AdminService {
   createPatient(patientData: FormData): Observable<any> {
     return this.http
       .post<any>(`${this.baseUrl}/Auth/patient/register`, patientData, {
-        headers: this.getAuthHeaders(false), // Do not set Content-Type for FormData
+        headers: this.getAuthHeaders(false),
       })
       .pipe(
         catchError((error) => {
